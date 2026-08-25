@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="tj">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SCANNERI ELEMENTHOI- МЕНДЕЛЕЕВ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent: #00ffcc;
+            --bg: #05080a;
+            --card: #11161d;
+            --cell-size: 44px;
+            --cell-gap: 4px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: url('foto/задний\ фон\ для\ сканера.jpg') center center / cover no-repeat fixed;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+
+        }
+
+        .app {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--accent);
+            letter-spacing: 2px;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .search-input {
+            flex: 1;
+            max-width: 400px;
+            background: var(--card);
+            border: 1px solid #2a3038;
+            padding: 16px 20px;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 255, 204, 0.1);
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, var(--accent), #00ccaa);
+            border: none;
+            padding: 0 30px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #000;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .search-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .selected-header {
+            background: rgba(20, 25, 35, 0.8);
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            min-height: 100px;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                text-shadow: 0 0 15px rgba(0, 255, 204, 0.7);
+            }
+        }
+
+        .selected-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .selected-number {
+            font-size: 1.2rem;
+            opacity: 0.6;
+            font-weight: bold;
+        }
+
+        .table-container {
+            background: rgba(25, 30, 40, 0.7);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #333940;
+            overflow: hidden;
+        }
+
+        .table-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #aaa;
+            text-align: center;
+        }
+
+        #periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, var(--cell-size));
+            grid-auto-rows: var(--cell-size);
+            gap: var(--cell-gap);
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .element-cell {
+            background: rgba(40, 45, 55, 0.9);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .element-cell:hover {
+            transform: scale(1.12);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+            z-index: 10;
+        }
+
+        .element-cell.active {
+            background: rgba(0, 255, 204, 0.15);
+            border-color: var(--accent);
+            box-shadow: inset 0 0 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .element-number {
+            font-size: 0.6rem;
+            opacity: 0.6;
+            position: absolute;
+            top: 3px;
+            left: 5px;
+        }
+
+        .element-symbol {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        .detail-card {
+            background: rgb(25, 30, 40, 0.7);
+            border-radius: 22px;
+            padding: 35px;
+            border: 1px solid #333940;
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .detail-text {
+            padding-right: 20px;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .detail-symbol {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .detail-number {
+            font-size: 2rem;
+            opacity: 0.5;
+            font-weight: bold;
+        }
+
+        .detail-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            display: block;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .info-block {
+            margin-bottom: 28px;
+        }
+
+        .info-label {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-text {
+            color: #d1d9e6;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .detail-photo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .element-image {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 18px;
+            border: 3px solid #3a4250;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            background: #1a1f29;
+            min-height: 250px;
+            object-fit: cover;
+        }
+
+        .photo-label {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            #periodic-table {
+                grid-template-columns: repeat(9, var(--cell-size));
+            }
+
+            .detail-card {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .detail-photo {
+                order: -1;
+            }
+
+            .element-image {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .selected-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .selected-symbol {
+                font-size: 2.8rem;
+            }
+
+            .selected-info h2 {
+                font-size: 1.8rem;
+            }
+
+            .detail-card {
+                padding: 25px;
+            }
+
+            .detail-name {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>SCANNERI ELEMENTHO</h1>
+            <p class="subtitle">ҶАДВАЛИ ДАВРИИ ЭЛЕМЕНТХОИ ХИМИЯИ - 118 ЭЛЕМЕНТ</p>
+        </div>
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="photo3.html" style="display: inline-block; 
+              background: linear-gradient(to right, #00b09b, #19b883);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+              transition: all 0.3s;">
+                <i class="fas fa-book"></i> Канкулятори Химияви
+            </a>
+            <a href="photo2.html" style="display: inline-block; 
+              background: linear-gradient(to right, #00b09b, #219b87);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(33, 193, 137, 0.4);
+              transition: all 0.3s;">
+                <i class="fas fa-book"></i> МАЪЛУМОТ ДАР БОРАИ ХИМИЯ
+            </a>
+                <a href="photo4.html" style="display: inline-block; 
+              background: linear-gradient(to right, #00b09b, #19b883);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+              transition: all 0.3s;">
+                    <i class="fas fa-book"></i> ТЕСТХОИ ХИМИЯВИ
+                </a>
+            </div>
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput"
+                    placeholder="Номи элемент ё рамзи онро ворид кунед..." autocomplete="off" autofocus>
+                <button class="search-btn" onclick="searchElement()">ҶУСТАН</button>
+            </div>
+            <div id="selectedHeader" class="selected-header" style="display: none;">
+                <div class="selected-symbol" id="selectedSymbol">H</div>
+                <div class="selected-info">
+                    <h2 id="selectedName">Ҳидроген</h2>
+                    <div class="selected-number" id="selectedNumber">#1 | ВАЗНИ АТОМИ: 1.008</div>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-title">ҶАДВАЛИ ДАВРИИ Д.И. МЕНДЕЛЕЕВ</div>
+                <div id="periodic-table">
+                </div>
+            </div>
+            <div id="detailCard" class="detail-card">
+                <div class="detail-text">
+                    <div class="detail-header">
+                        <span class="detail-symbol" id="detailSymbol">H</span>
+                        <span class="detail-number" id="detailNumber">#1</span>
+                    </div>
+                    <span class="detail-name" id="detailName">Ҳидроген (H)</span>
+
+                    <div class="info-block">
+                        <span class="info-label">ИСТИФОДАБАРИИ АСОСӢ</span>
+                        <span class="info-text" id="detailUse">Сӯзишвории мушакҳо ва ситораҳо.</span>
+                    </div>
+
+                    <div class="info-block">
+                        <span class="info-label">ХОСИЯТҲОИ ҶОЛИБ</span>
+                        <span class="info-text" id="detailFact">Элементи аз ҳама паҳншуда дар Коинот.</span>
+                    </div>
+                    <div class="info-block">
+                        <span class="info-label">ХАТАРНОКӢ</span>
+                        <span class="info-text" id="detailDanger">Тарканда аст.</span>
+                    </div>
+                    <div class="info-block">
+                        <span class="info-label">ВАЗНИ АТОМИ</span>
+                        <span class="info-text" id="detailWeight">1.008</span>
+                    </div>
+                </div>
+                <div class="detail-photo">
+                    <img id="elementImage" class="element-image" src="" alt="Сурати элемент">
+                    <div class="photo-label">СУРАТИ ЭЛЕМЕНТ</div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // BAZA DANNIX
+            const elementsDatabase = {
+                "h": { name: "Ҳидроген (H)", number: 1, weight: "1.008", use: "Сӯзишвории мушакҳо ва ситораҳо.", fact: "Элементи аз ҳама паҳншуда дар Коинот.", danger: "Тарканда аст.", image: "foto/3.jpg" },
+                "he": { name: "Ҳелий (He)", number: 2, weight: "4.0026", use: "Барои пур кардани пуфакҳо.", fact: "Дувумин элементи сабуктарин.", danger: "Бехатар.", image: "foto/" },
+                "li": { name: "Литий (Li)", number: 3, weight: "6.94", use: "Батареяҳои телефон ва ноутбук.", fact: "Метавонад дар болои об шино кунад.", danger: "Ҳангоми тамос бо об метаркад.", image: "foto/litiy.jpg" },
+                "c": { name: "Карбон (C)", number: 4, weight: "12.011", use: "Алмаз, графити қалам ва асоси ҳаёт.", fact: "Алмаз ва ангишт аз як элемент иборатанд.", danger: "Бехатар.", image: "foto/c.jpg" },
+                "n": { name: "Азот (N)", number: 5, weight: "14.007", use: "Истеҳсоли нуриҳо ва яхкунӣ.", fact: "78% ҳаворо ташкил медиҳад.", danger: "Дар шакли моеъ ниҳоят сард аст.", image: "" },
+                "o": { name: "Оксиген (O)", number: 6, weight: "15.999", use: "Нафаскашӣ ва сӯхтор.", fact: "Ранг дорад, аммо танҳо дар шакли моеъ (кабуд).", danger: "Оташгиранда.", image: "foto/o.jpg" },
+                "al": { name: "Алюминий (Al)", number: 7, weight: "26.982", use: "Тайёраҳо, фолга ва банкаҳои нӯшокӣ.", fact: "Пештар аз тилло гаронтар буд.", danger: "Бехатар.", image: "foto/al.jpg" },
+                "fe": { name: "Оҳан (Fe)", number: 8, weight: "55.845", use: "Сохтмон ва гемоглобини хун.", fact: "Миррих аз сабаби оҳан сурх аст.", danger: "Бехатар.", image: "foto/fe.jpg" },
+                "cu": { name: "Мис (Cu)", number: 9, weight: "63.546", use: "Симҳои барқӣ ва тангаҳо.", fact: "Якумин металле, ки одам истифода бурдааст.", danger: "Бехатар.", image: "foto/cu.jpg" },
+                "ag": { name: "Нуқра (Ag)", number: 10, weight: "107.87", use: "Ҷавоҳирот ва оинаҳо.", fact: "Беҳтарин гузаронандаи барқ дар ҷаҳон.", danger: "Бехатар.", image: "foto/ag.jpg" },
+                "au": { name: "Тилло (Au)", number: 11, weight: "196.97", use: "Захираҳои давлатӣ ва электроника.", fact: "Тиллоро ҳатто дар хӯрок истифода мебаранд.", danger: "Бехатар.", image: "foto/au.jpg" },
+                "hg": { name: "Симоб (Hg)", number: 12, weight: "200.59", use: "Термометрҳо.", fact: "Ягона металле, ки дар ҳарорати хона моеъ аст.", danger: "Хеле заҳролуд!", image: "foto/hg.jpg" },
+                "cl": { name: "Хлор (Cl)", number: 13, weight: "35.45", use: "Безарар гардонидани оби ҳавзҳо.", fact: "Хлор дар табиат танҳо дар шакли пайвастагиҳо вомехӯрад.", danger: "Заҳролуд.", image: "foto/cl.jpg" },
+                "mg": { name: "Магний (Mg)", number: 14, weight: "24.305", use: "Дар сохтани фейерверкҳо.", fact: "Ҳангоми сӯхтан нури сафеди ниҳоят дурахшон медиҳад.", danger: "Бехатар.", image: "foto/mg.jpg" },
+                "si": { name: "Кремний (Si)", number: 15, weight: "28.085", use: "Истеҳсоли шиша ва чипҳои компютерӣ.", fact: "Элементи дуюми паҳншуда дар қабати замин.", danger: "Бехатар.", image: "foto/si.jpg" },
+                "p": { name: "Фосфор (P)", number: 16, weight: "30.974", use: "Истеҳсоли гӯгирд ва нуриҳои кишоварзӣ.", fact: "Ин элемент дар торикии нур мепошад.", danger: "Заҳролуд.", image: "foto/p.jpg" },
+                "s": { name: "Сулфур (S)", number: 17, weight: "32.06", use: "Барои сохтани кислотаи сулфат ва резина.", fact: "Металли сахти зардранг.", danger: "Бехатар.", image: "foto/s.jpg" },
+                "ar": { name: "Аргон (Ar)", number: 18, weight: "39.948", use: "Дар лампаҳои барқӣ ва барои кафшер.", fact: "Гази инертӣ, ки бо чизе реаксия намекунад.", danger: "Бехатар.", image: "foto/ar.jpg" },
+                "k": { name: "Калий (K)", number: 19, weight: "39.098", use: "Барои истеҳсоли нуриҳои минералӣ ва собун.", fact: "Элементи хеле фаъол, ки дар об метаркад.", danger: "Бехатар.", image: "foto/k.jpg" },
+                "ca": { name: "Калсий (Ca)", number: 20, weight: "40.078", use: "Барои мустаҳкам кардани устухонҳо ва сохтмон.", fact: "Металли сахти нуқрагун.", danger: "Бехатар.", image: "foto/ca.jpg" },
+                "sc": { name: "Скандий (Sc)", number: 21, weight: "44.956", use: "Дар сохтани қисмҳои cайёра ва лампаҳо.", fact: "Металли сабук барои мустаҳкам кардани хӯлаҳо.", danger: "Бехатар.", image: "foto/sc.jpg" },
+                "ti": { name: "Титан (Ti)", number: 22, weight: "47.867", use: "Дар сохтани сайёраҳо ва имплантҳои тиббӣ.", fact: "Металли хеле мустаҳкам ва ба зангзанӣ тобовар.", danger: "Бехатар.", image: "foto/ti.jpg" },
+                "v": { name: "Ванадий (V)", number: 23, weight: "50.942", use: "Барои мустаҳкам кардани пӯлод дар асбобҳо.", fact: "Номаш аз олиҳаи зебоии Скандинавия гирифта шудааст.", danger: "Заҳролуд.", image: "foto/v.jpg" },
+                "cr": { name: "Хром (Cr)", number: 24, weight: "51.996", use: "Рӯпӯши қисмҳои мошин ва пӯлоди зангногир.", fact: "Маҳз аз хром пӯлод занг намезанад.", danger: "Бехатар.", image: "foto/cr.jpg" },
+                "mn": { name: "Марганец (Mn)", number: 25, weight: "54.938", use: "Дар истеҳсоли релсҳо ва батареяҳо.", fact: "Барои кори майнаи сари инсон зарур аст.", danger: "Бехатар.", image: "foto/mn.jpg" },
+                "na": { name: "Натрий (Na)", number: 26, weight: "22.990", use: "Дар истифодаи намаки ош ва чарогҳои куча.", fact: "Металли ниҳояд мулоим, ки онро бо корд бурридан мункин аст.", danger: "Ҳангоми тамос бо об метаркад.", image: "foto/na.jpg" },
+                "ne": { name: "Неон (Ne)", number: 27, weight: "20.180", use: "Дар сохтани лавҳаҳои рекламавиидурахшон.", fact: "Агар аз он ҷараени барқ гузарад, ранги сурхи дурахшон медиҳад.", danger: "Бехатар.", image: "foto/ne.jpg" },
+                "f": {
+                    name: "Фтор (F)", number: 28, weight: "18.998", use: "Дар хамираи дандон барои ҳимояи дандонҳо.", fact: "Фаолтарин гайриметалл, ки ҳатто бо шиша реаксия мекунад.", danger: "Гази ниҳояд заҳролуд ва хатарнок аст.", image: "foto/f.jpg"
+                },
+                "zn": { name: "Руҳ (Zn)", number: 29, weight: "65.38", use: "Барои ҳимояи оҳан аз занг задан ва дар сохтмони батареяҳо.", fact: "Барои имунитет ва саломатии инсон хеле муҳим аст.", danger: "Бехатар.", image: "foto/zn.jpg" },
+                "ga": { name: "Галлий (Ga)", number: 30, weight: "69.723", use: "Дар микросхемоҳо ва термометрҳои тибби.", fact: "Ин металл дар кафи даст аз ҳарорати бадан об мешавад.", danger: "Бехатар.", image: "foto/ga.jpg" },
+                "ge": { name: "Германий (Ge)", number: 31, weight: "72.630", use: "Дар нахҳои оптики ва линзаҳои дурбинҳои шаблон.", fact: "Ин элемент барои сохтани аввалин транзисторҳо дар ҷаҳон истифода шуда буд.", danger: "Бехатар.", image: "foto/ge.jpg" },
+                "br": { name: "Бром (Br)", number: 32, weight: "79.904", use: "Дар тибб барои ором кардани асаб истифода мебаранд.", fact: "Ягона гайриметалли моеь аст, ки дар ҳарорати хонаги буи ниҳояд бад ва тез дорад.", danger: "Заҳролуд аст ва пустро месузонад.", image: "foto/br.jpg" },
+                "kr": { name: "Криптон (Kr)", number: 33, weight: "83.798", use: "Дар лампаҳои пурқудрат ва лазерҳои ҷарроҳии чашм.", fact: "ИН газро пинҳони меноманд чунки дар ҳаво хеле кам вомехурад.", danger: "Бехатар.", image: "foto/kr.jpg" },
+                "rb": { name: "Рубидий (Rb)", number: 34, weight: "85.468", use: "Дар соатҳои атоми ва истеҳсоли нимноқилҳо.", fact: "Ин металл он қадар фаол аст, ки дар ҳаво худ аз худ оташ мегирад.", danger: "Ниҳояд хатарнок дар об метаркад.", image: "foto/rb.jpg" },
+                "sr": { name: "Стронсий (Sr)", number: 35, weight: "87.62", use: "Дар сохтанифейверкҳо барои додани ранги сурхи дурахшон.", fact: "Уустухонҳои инсон метавонад стронсийро ба ҷойи калси иваз кунад.", danger: "Бехатар.", image: "foto/sr.jpg" },
+                "y": { name: "Иттрий (Y)", number: 36, weight: "88.906", use: "Дар истеҳсол0и лазерҳо ва экранҳои телевизор.", fact: "Ин элементро дар деҳаи Иттербюи Шветсия ёфтаанд ва номашро аз ҳамон ҷо гирифтаанд.", danger: "Бехатар.", image: "foto/Y.jpg" },
+                "zr": { name: "Цирконий (Zr)", number: 37, weight: "91.224", use: "Дар сохтани реакторҳои ядрои.", fact: "Ин металл ба занг зани ниҳоят тобовар аст ва дар киштиҳои кайҳоини истифода мешавад.", danger: "Бехатар.", image: "foto/zr.jpg" },
+                "nb": { name: "Ниобий (Nb)", number: 38, weight: "92.906", use: "Дар сохтани сканерҳои тиббии МРТ истифода мешавад.", fact: "Ин металл дар ҳарорати ниҳоят паст суперспособность пайдо мекунад.", danger: "Бехатар.", image: "foto/nb.jpg" },
+                "mo": { name: "Молибден (Mo)", number: 39, weight: "95.95", use: "Дар истеҳсоли пулоди мустаҳкам истифода мешавад.", fact: "Ин металл то ҳарорати 2623С тоб меорад.", danger: "Бехатар.", image: "foto/mo.jpg" },
+                "ru": { name: "Рутений (Ru)", number: 40, weight: "101.07", use: "Дар сохтани контактҳои барқии ниҳояд тобовар ва барои сахт кардани платина.", fact: "Номи ин металлро аз Рассия гирифтаанд.", danger: "Дар шакли металл бехатар аст.", image: "foto/ru.jpg" },
+                "rh": { name: "Родий (Rh)", number: 41, weight: "102.91", use: "Дар филтрҳои мошин (катализатор) ва рӯйпӯши ҷавоҳирот.", fact: "Яке аз камёфттарин ва гаронтарин металлҳои қиматбаҳо дар ҷаҳон аст.", danger: "Бехатар.", image: "foto/rh.jpg" },
+                "pd": { name: "Палладий (Pd)", number: 42, weight: "106.42", use: "Дар филтрҳои мошинҳои замонавӣ ва электроника.", fact: "Қобилияти аҷиби ҷабби гидрогенро дорад — 900 баробар зиёд аз ҳаҷми худаш.", danger: "Бехатар", image: "foto/pd.jpg" },
+                "cd": { name: "Кадмий (Cd)", number: 43, weight: "112.41", use: "Дар батареяҳои барқгиранда ва барои муҳофизати металлҳо аз зангзанӣ.", fact: "Пайвастагиҳои кадмий рангҳои дурахшони зард, норанҷӣ ва сурх медиҳанд.", danger: "Заҳролуд аст.", image: "foto/cd.jpg" },
+                "in": { name: "Индий (In)", number: 44, weight: "114.82", use: "Дар экранҳои сенсории смартфонҳо ва планшетҳо.", fact: "Ин металл чунон мулоим аст, ки онро бо корд бурридан мумкин аст.", danger: "Бехатар.", image: "foto/in.jpg" },
+                "sb": { name: "Сурма (Sb)", number: 45, weight: "121.76", use: "Дар сохтани батареяҳои сурбӣ ва нимноқилҳо.", fact: "Дар замонҳои қадим сурмаро барои ороиши чашм (сурм кашидан) истифода мебурданд.", danger: "Заҳролуд аст.", image: "foto/sb.jpg" },
+                "sn": { name: "Қалъагӣ (Sn)", number: 46, weight: "118.71", use: "Барои кафшеркунии (пайка) қисмҳои электронӣ ва сохтани зарфҳои консервӣ.", fact: "Яке аз қадимтарин металлҳое мебошад, ки инсон барои сохтани биринҷӣ истифода бурдааст.", danger: "Бехатар.", image: "foto/sn.jpg" },
+                "te": { name: "Теллур (Te)", number: 47, weight: "127.60", use: "Дар истеҳсоли панелҳои офтобӣ ва дискҳои CD/DVD.", fact: "Агар ба бадани инсон расад, нафаси одам бӯи сахти сирпиёзро (чеснок) мегирад.", danger: "Камзаҳр.", image: "foto/te.jpg" },
+                "i": { name: "Йод (I)", number: 48, weight: "126.90", use: "Дар тиб барои безараргардонии захмҳо ва кори ғадуди сипаршакл.", fact: "Ягона ғайриметаллест, ки ҳангоми гарм кардан бе об шудан мустақиман ба бухори бунафш табдил меёбад.", danger: "Дар миқдори зиёд хатарнок.", image: "foto/ielement.jpg" },
+                "xe": { name: "Ксенон (Xe)", number: 49, weight: "131.29", use: "Дар чароғҳои пурқудрати мошин ва лазерҳо.", fact: "Ин аввалин гази инертӣ буд, ки олимон тавонистанд бо дигар элементҳо пайваст кунанд.", danger: "Бехатар.", image: "foto/xe.jpg" },
+                "cs": { name: "Цезий (Cs)", number: 50, weight: "132.91", use: "Дар соатҳои ниҳоят дақиқи атомӣ.", fact: "Цезий фаолтарин металл дар ҷаҳон аст ва дар ҳарорати 28°C об мешавад.", danger: "Ниҳоят хатарнок, дар об метаркад!", image: "foto/cs.jpg" },
+                "ba": { name: "Барий (Ba)", number: 51, weight: "137.33", use: "Дар рентгени меъда ва истеҳсоли шиша.", fact: "Пайвастагиҳои барий ба фейерверкҳо ранги сабзи дурахшон медиҳанд.", danger: "Заҳролуд аст.", image: "foto/ba.jpg" },
+                "la": { name: "Лантан (La)", number: 52, weight: "138.91", use: "Дар линзаҳои дурбин ва батареяҳои мошинҳои гибридӣ.", fact: "Ин металл чунон мулоим аст, ки бо корд бурида мешавад.", danger: "Бехатар.", image: "foto/la.jpg" },
+                "w": { name: "Волфрам (W)", number: 53, weight: "183.84", use: "Дар сохтани лампаҳои барқӣ ва нӯги пармаҳои ниҳоят сахт.", fact: "Ин металл баландтарин ҳарорати обшавиро дар ҷаҳон дорад (3422°C) ва ҳеҷ гоҳ намесӯзад.", danger: "Бехатар.", image: "foto/W.jpg" },
+                "pr": { name: "Празеодим (Pr)", number: 54, weight: "140.91", use: "ар сохтани айнакҳои махсус барои кафшергарон (сваршикҳо) ва муҳаррикҳои тайёра.", fact: "Ин металлро ба шиша илова мекунанд, то онро аз нурҳои зараровари ултрабунафш муҳофизат кунад.", danger: "Бехатар.", image: "foto/pr.jpg" },
+                "re": { name: "Рений (Re)", number: 55, weight: "186.21", use: "Дар сохтани муҳаррикҳои реактивии тайёраҳои ҷангӣ.", fact: "Яке аз камёфттарин металлҳо дар ҷаҳон аст, ки дар ҳарорати ниҳоят баланд ҳам шаклашро дигар намекунад.", danger: "Бехатар.", image: "foto/re.jpg" },
+                "pt": { name: "Платина (Pt)", number: 56, weight: "195.08", use: "Дар сохтани ҷавоҳироти гаронбаҳо ва филтрҳои мошинҳои қиматбаҳо.", fact: "Платина аз тилло дида камёфттар аст ва агар ҳамаи платинаи ҷаҳонро ҷамъ кунӣ, он танҳо ба андозаи як ҳавзи шиноварӣ мешавад.", danger: "Бехатар.", image: "foto/pt.jpg" },
+                "ir": { name: "Иридий (Ir)", number: 57, weight: "192.22", use: "Дар сохтани шамъҳои даргирандаи мошинҳо (свеча) ва нӯги ручкаҳои гаронбаҳо.", fact: "Ин элементро металле меҳисобанд, ки аз кайҳон омадааст, чунки дар метеоритҳо бисёр ёфт мешавад.", danger: "Бехатар.", image: "foto/ir.jpg" },
+                "os": { name: "Осмий (Os)", number: 58, weight: "190.23", use: "Дар сохтани соатҳои элита ва асбобҳои ниҳоят дақиқи тиббӣ.", fact: "Ин вазнинтарин (зичтарин) модда дар рӯи замин аст, як қуттии хурди он ба андозаи як фил вазн дорад.", danger: "Дар шакли хока заҳролуд аст.", image: "foto/os.jpg" },
+                "tl": { name: "Таллий (Tl)", number: 59, weight: "204.38", use: "Дар сохтани линзаҳои махсус ва дастгоҳҳои дид дар шаб.", fact: "Ин элементро 'заҳри қотил' меноманд, чунки бӯй ва мазза надорад ва заҳролудшавиро фаҳмидан душвор аст.", danger: "Ниҳоят заҳролуд!", image: "foto/tl.jpg" },
+                "pb": { name: "Сурб (Pb)", number: 60, weight: "207.2", use: "Дар сохтани батареяҳои мошин ва деворҳои муҳофизатӣ аз нурҳои рентгенӣ.", fact: "Сурб яке аз вазнинтарин металлҳост ва он метавонад ҳатто радиатсияро боздорад, аммо барои кӯдакон хеле хатарнок аст.", danger: "Заҳролуд аст.", image: "foto/pb.jpg" },
+                "bi": { name: "Висмут (Bi)", number: 61, weight: "208.98", use: "Дар сохтани доруҳои меъда, косметикӣ ва дастгоҳҳои зидди сӯхтор.", fact: "Кристаллҳои ин металл дар шакли зинапояҳои рангоранг мерӯянд ва он ягона металест, ки мисли об ҳангоми ях кардан ҳаҷмаш калон мешавад.", danger: "Бехатар.", image: "foto/bi.jpg" },
+                "po": { name: "Полоний (Po)", number: 62, weight: "209.0", use: "Дар сохтани манбаъҳои энергия барои киштиҳои кайҳонӣ ва дастгоҳҳои зидди статикӣ.", fact: "Ин элемент миллионҳо маротиба нисбат ба сианид заҳрноктар аст ва аз худ гармии зиёд хориҷ мекунад.", danger: "Ниҳоят радиоактив ва хатарнок!", image: "foto/po.jpg" },
+                "u": { name: "Уран (U)", number: 63, weight: "238.03", use: "Дар нерӯгоҳҳои атомӣ ва киштиҳои зериобӣ.", fact: "як грамм уран нисбат ба 3 тонна ангишт бештар энергия медиҳад.", danger: "Ниҳоят хатарнок ва радиоактив.", image: "foto/u.jpg" },
+                "rn": { name: "Радон (RN),", number: 64, weight: "222", use: "Дар Радиоактив ва хатарнок.", fact: "Пайвастагиҳои барий ба фейерверкҳо ранги сабзи дурахшон медиҳанд.", danger: "Бехатар.", image: "foto/rn.jpg" },
+                "be": { name: "Бериллий (Be)", number: 65, weight: "9.0122", use: "Дар сохтани қисмҳои тайёра ва киштиҳои кайҳонӣ.", fact: "Ин металл хеле сабук ва ҳамзамон хеле мустаҳкам аст.", danger: "Чанги бериллий барои шушҳо хеле заҳрнок аст." },
+                "b": { name: "Бор (B)", number: 66, weight: "10.81", use: "Дар истеҳсоли шишаҳои тобовар ба гармӣ (Pyrex) ва маводи шустушӯй.", fact: "Пайвастагиҳои бор барои сахт кардани пӯлод истифода мешаванд.", danger: "Дар шакли муқаррарӣ заҳрнок нест, вале баъзе пайвастагиҳои он метавонанд зараровар бошанд.", image: "foto/b.jpg" },
+                "co": { name: "Колбалт (Co)", number: 67, weight: "58.933", use: "Дар сохтани магнитҳои қавӣ ва хӯлаҳои тобовар.", fact: "Ранги машҳури 'кабуди кобалтӣ' аз ҳамин элемент гирифта шудааст.", danger: "Дар сурати аз меъёр зиёд ворид шудан ба бадан метавонад заҳрнок бошад.", image: "foto/co.jpg" },
+                "ni": { name: "Никел (Ni)", number: 68, weight: "58.693", use: "Барои рӯйпӯш кардани металлҳо (зидди зангзанӣ) ва сохтани тангаҳо.", fact: "Қисми зиёди ядрои сайёраи Замин аз никел ва оҳан иборат аст.", danger: "Баъзе одамон ба никел аллергия доранд, ки боиси хориши пӯст мегардад.", image: "foto/ni.jpg" },
+                "se": { name: "Селен (Se)", number: 69, weight: "78.971", use: "Дар истеҳсоли панелҳои офтобӣ ва дастгоҳҳои нусхабардорӣ (ксерокс).", fact: "Ин элемент қобилияти гузаронидани қувваи барқро дар зери рӯшноӣ тағйир медиҳад.", danger: "Дар миқдори зиёд заҳрнок аст, вале дар миқдори хеле кам барои саломатии инсон зарур мебошад.", image: "foto/se.jpg" },
+                "tc": { name: "Технеций (Tc)", number: 70, weight: "98", use: "Дар тибби ядроӣ барои ташхиси узвҳои дохилӣ.", fact: "Ин аввалин элементест, ки аз ҷониби инсон ба таври сунъӣ гирифта шудааст.", danger: "Радиоактив аст, бинобар ин танҳо дар шароити махсуси тиббӣ истифода мешавад.", image: "foto/tc.jpg" },
+                "lu": { name: "Лютеций (Lu)", number: 71, weight: "174.97", use: "Дар тибби ядроӣ барои табобати варамҳо ва дар саноати нафт.", fact: "Ин гаронтарин ва вазнинтарин элементи гурӯҳи лантаноидҳо мебошад.", danger: "Мисли дигар металлҳои нодир, заҳролудшавии паст дорад, аммо эҳтиёт лозим аст.", image: "foto/lu.jpg" },
+                "hf": { name: "Гафний (Hf)", number: 72, weight: "178.49", use: "Дар сохтани чӯбчаҳои назоратӣ барои реакторҳои атомӣ.", fact: "Гафний қобилияти хеле хуби фурӯ бурдани нейтронҳоро дорад.", danger: "Дар шакли хока метавонад худ аз худ дар ҳаво оташ гирад." },
+                "ta": { name: "Тантал (Ta)", number: 73, weight: "180.95", use: "Дар истеҳсоли телефонҳои мобилӣ ва имплантҳои ҷарроҳӣ.", fact: "Тантал ба зангзанӣ (коррозия) хеле тобовар аст, ҳатто дар ҳарорати зери 150°C.", danger: "Умуман бехатар ҳисоб мешавад ва дар дохили бадани инсон аксуламал намедиҳад.", image: "foto/ta.jpg" },
+                "ab": { name: "Абадий (Ab)", number: 74, weight: "190.23", use: "Барои сохтани хӯлаҳои сахт дар нӯги ручкаҳои худнавис.", fact: "Ин зичтарин ва вазнинтарин элементи табиӣ дар рӯи Замин аст.", danger: "Оксиди осмий хеле заҳролуд аст ва ба чашму шуш зарар мерасонад.", image: "foto/os.jpg" },
+                "at": { name: "Астат (At)", number: 75, weight: "210", use: "Дар тиб барои табобати баъзе намудҳои саратон (радиотерапия).", fact: "Камёфттарин элемент дар қишри Замин — миқдори умумии он аз 30 грамм зиёд нест.", danger: "Хеле радиоактив ва хатарнок аст.", image: "foto/at.jpg" },
+                "ra": { name: "Радий (Ra)", number: 76, weight: "226", use: "Пештар барои рангҳои дурахшон дар соатҳо истифода мешуд.", fact: "Мария Кюри ин элементро кашф кардааст ва он дар торикӣ нур мепошад.", danger: "Хеле радиоактив аст; метавонад боиси бемории саратони устухон гардад.", image: "foto/ra.jpg" },
+                "pu": { name: "Плутоний (Pu)", number: 77, weight: "224", use: "Дар бомбаҳои атомӣ ва батареяҳои киштиҳои кайҳонӣ.", fact: "Плутоний дар натиҷаи реаксияҳои ядроӣ аз Уран ба даст меояд.", danger: "Яке аз моддаҳои заҳролудтарин ва радиоактив дар ҷаҳон.", image: "foto/pu.jpg" },
+                "th": { name: "Торий (Th)", number: 78, weight: "232.04", use: "Дар оянда метавонад ҳамчун сӯзишвории бехатари ядроӣ истифода шавад.", fact: "Дар қишри замин нисбат ба уран се маротиба бештар мавҷуд аст.", danger: "Элементи радиоактив аст, эҳтиёт ва назоратро талаб мекунад.", image: "foto/th.jpg" },
+                "ac": { name: "Актиний (Ac)", number: 79, weight: "Ҳамчун манбаи нейтронҳо ва дар тадқиқотҳои илмӣ.", fact: "Актиний дар торикӣ бо ранги кабуди хира медурахшад.", danger: "Хеле радиоактив аст ва ҳатто дар миқдори кам хатарнок мебошад.", image: "foto/ac.jpg" },
+                "am": { name: "Америций (Am)", number: 80, weight: "243", use: "Дар дастгоҳҳои дудсанҷ (детектори дуд) дар хонаҳо истифода мешавад.", fact: "Америций элементи сунъӣ аст, ки бори аввал дар ИМА кашф шудааст.", danger: "Радиоактив аст, аммо дар дохили дастгоҳҳои дудсанҷ бехатар мебошад.", image: "foto/am.jpg" },
+                "fr": { name: "Франсий (Fr)", number: 81, weight: "223", use: "Танҳо дар тадқиқотҳои илмӣ истифода мешавад.", fact: "Фаъолтарин металли алкалӣ аст ва камёфттарин элемент дар қишри Замин.", danger: "Хеле радиоактив ва нобудшаванда; бошад ҳатто таҷриба кардан ҳам душвор.", image: "foto/fr.jpg" },
+                "rf": { name: "Резерфордий (Rf)", number: 82, weight: "104", use: "Танҳо дар тадқиқотҳои илмӣ.", fact: "Аввалин элементҳои трансактиноидӣ, ки дар лаборатория сохта шудааст.", danger: "Радиоактив ва нобудшаванда; тадқиқот дар лабораторияҳои махсус анҷом дода мешавад.", image: "foto/Rf.jpg" },
+                "db": { name: "Дубний (Db)", number: 83, weight: "268", use: "Танҳо дар тадқиқотҳои илмӣ.", fact: "Номаш ба шарафи шаҳри Дубна (Россия), ки дар он ҷо бисёр элементҳои сунъӣ кашф шудаанд.", danger: "Радиоактив ва нобудшаванда.", image: "foto/db.jpg" },
+                "sg": { name: "Сиборгий (Sg)", number: 84, weight: "106", use: "Танҳо дар тадқиқотҳои илмӣ.", fact: "Номашро ба шарафи олими атомии амрикоӣ Гленн Сиборг гузоштаанд.", danger: "Радиоактив ва нобудшаванда.", image: "foto/sg.jpg" },
+                "bh": { name: "Борий (Bh)", number: 85, weight: "270", use: "Танҳо дар тадқиқотҳои илмӣ.", fact: "Номашро ба шарафи олими даниягӣ Нильс Бор гузоштаанд.", danger: "Радиоактив ва нобудшаванда.", image: "foto/bh.jpg" },
+                "as": { name: "Арсен (As)", number: 86, weight: "74.921", use: "Дар микросхемаҳои смартфонҳо, лазерҳо ва панелҳои офтобӣ.", fact: "Дар гузашта онро 'подшоҳи заҳрҳо' меномиданд, зеро таъм ва бӯй надорад.", danger: "Хеле заҳрнок аст.", image: "foto/as.jpg" },
+                "hs": { name: "Хассий (Hs)", number: 87, weight: "269", use: "Танҳо барои тадқиқотҳои илмӣ истифода мешавад.", fact: "Номи худро аз иёлати Ҳессени Олмон (Hessia) гирифтааст, ки дар он ҷо бори аввал кашф шудааст.", danger: "Радиоактивии ниҳоят баланд.", image: "foto/hs.jpg" },
+                "mt": { name: "Мейтнерий (Mt)", number: 88, weight: "278", use: "Танҳо барои тадқиқотҳои илмии фундаменталӣ.", fact: "Ягона элементест, ки ба шарафи зани олим номгузорӣ шудааст (ба ғайр аз Кюрий, ки ба шарафи ҳам зану ҳам шавҳар аст.", danger: "Радиоактивии ниҳоят баланд.", image: "foto/mt.jpg" },
+                "ds": { name: "Дармштадтий (Ds)", number: 89, weight: "281", use: "Танҳо барои таҷрибаҳои илмӣ ва омӯзиши хосиятҳои ядроӣ.", fact: "Аввал мехостанд онро 'Полиций' ном диҳанд, чунки рақами телефони пулис дар Олмон 110 аст.", danger: "Радиоактивии ниҳоят баланд.", image: "foto/ds.jpg" },
+                "e90": { symbol: "Th", name: "Торий (Th)", number: 90, weight: "232.04", use: "Дар нерӯгоҳҳои атомӣ ва тадқиқотҳои ядроӣ.", fact: "Ин элементи аввалини актиноидҳо аст.", danger: "Радиоактив ва эҳтиёткориро талаб мекунад.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e91": { symbol: "Pa", name: "Протактиний (Pa)", number: 91, weight: "231.04", use: "Дар таҳқиқоти ядроӣ ва истеҳсоли манбаъҳои нейтрон.", fact: "Ин элементи радиоактивӣ хеле нодир аст.", danger: "Радиоактив ва хатарнок.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e92": { symbol: "U", name: "Уран (U)", number: 92, weight: "238.03", use: "Дар нерӯгоҳҳои атомӣ ва таҳқиқоти ядроӣ.", fact: "Ин элементи муҳимтарин барои энергияҳои ҳастаӣ мебошад.", danger: "Радиоактив ва эҳтиёткориро талаб мекунад.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e93": { symbol: "Np", name: "Нептуний (Np)", number: 93, weight: "237", use: "Дар таҳқиқоти ядроӣ.", fact: "Ин аввалин элементи сунъӣ дар занҷири актиноидҳо аст.", danger: "Радиоактив ва хатарнок.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e94": { symbol: "Pu", name: "Плутоний (Pu)", number: 94, weight: "244", use: "Дар бомбаҳои атомӣ ва реакторҳои ядроӣ.", fact: "Ин яке аз самтҳои асосии таҳқиқоти атомист.", danger: "Радиоактив ва хеле хатарнок.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e95": { symbol: "Am", name: "Америций (Am)", number: 95, weight: "243", use: "Дар детекторҳои дуд ва таҳқиқоти радиоактив.", fact: "Ин элементи сунъӣ барои истифодаи саноатӣ ва илмӣ истифода мешавад.", danger: "Радиоактив ва хатарнок.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e96": { symbol: "Cm", name: "Кюрий (Cm)", number: 96, weight: "247", use: "Дар таҳқиқоти ядроӣ ва истеҳсоли батареяҳои радиоактив.", fact: "Номашро ба шарафи Мари ва Пьер Кюри гирифтааст.", danger: "Радиоактив ва хатарнок.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e97": { symbol: "Bk", name: "Берклий (Bk)", number: 97, weight: "247", use: "Дар тадқиқоти илмӣ.", fact: "Номи ин элемент ба номи шаҳри Беркли дар Калифорния гузошта шудааст.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e98": { symbol: "Cf", name: "Калифорний (Cf)", number: 98, weight: "251", use: "Барои манбаъҳои нейтрон дар тадқиқот.", fact: "Номи элемент ба номи илмдони Калифорниягузошта шудааст.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e99": { symbol: "Es", name: "Эйнштейний (Es)", number: 99, weight: "252", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи Алберт Эйнштейн.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e100": { symbol: "Fm", name: "Фермий (Fm)", number: 100, weight: "257", use: "Дар тадқиқоти ядроӣ.", fact: "Номи элемент аз номи физик Энрико Ферми гирифта шудааст.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e101": { symbol: "Md", name: "Менделевий (Md)", number: 101, weight: "258", use: "Дар тадқиқоти ядроӣ.", fact: "Номи элемент ба шарафи Дмитрий Менделеев.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e102": { symbol: "No", name: "Нобелий (No)", number: 102, weight: "259", use: "Дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи Альфред Нобел.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e103": { symbol: "Lr", name: "Лоуренсий (Lr)", number: 103, weight: "262", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи Эрнест Лоуренс.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e104": { symbol: "Rf", name: "Резерфордий (Rf)", number: 104, weight: "267", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Ин элементи синфи трансактиноидҳо мебошад.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e105": { symbol: "Db", name: "Дубний (Db)", number: 105, weight: "270", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи шаҳри Дубна дар Русия.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e106": { symbol: "Sg", name: "Сиборгий (Sg)", number: 106, weight: "271", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи олими америкоӣ Гленн Сиборг.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e107": { symbol: "Bh", name: "Борий (Bh)", number: 107, weight: "270", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи физик Нильс Бор.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e108": { symbol: "Hs", name: "Ҳассий (Hs)", number: 108, weight: "277", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи иёлати Ҳессен дар Олмон.", danger: "Радиоактив.", image: "foto/hs.jpg" },
+                "e109": { symbol: "Mt", name: "Мейтнерий (Mt)", number: 109, weight: "278", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи физик Ҳерта Мейтнер.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e110": { symbol: "Ds", name: "Дармштадтий (Ds)", number: 110, weight: "281", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шаҳри Дармштадт дар Олмон.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e111": { symbol: "Rg", name: "Рентгений (Rg)", number: 111, weight: "282", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи Вильгельм Рентген.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e112": { symbol: "Cn", name: "Копернисий (Cn)", number: 112, weight: "285", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи астроном Никола Коперник.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e113": { symbol: "Nh", name: "Нихоний (Nh)", number: 113, weight: "286", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба миллат ва илмҳои Ҷопон.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e114": { symbol: "Fl", name: "Флеровий (Fl)", number: 114, weight: "289", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шарафи физик Жорж Флёров.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e115": { symbol: "Mc", name: "Московий (Mc)", number: 115, weight: "290", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба шаҳри Маскав.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e116": { symbol: "Lv", name: "Ливерморий (Lv)", number: 116, weight: "293", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба Ливермор, Калифорния.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e117": { symbol: "Ts", name: "Теннесиний (Ts)", number: 117, weight: "294", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Номи элемент ба иёлот Теннесӣ дар ИМА.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" },
+                "e118": { symbol: "Og", name: "Оганессон (Og)", number: 118, weight: "294", use: "Танҳо дар тадқиқоти илмӣ.", fact: "Ин элементи охирин дар системаи мӯътамади даврӣ мебошад.", danger: "Радиоактив.", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format" }
+            }
+            const nameToSymbol = {
+                "ҳидроген": "h",
+                "арсен": "as",
+                "хассий": "hs",
+                "мейтнерий": "mt",
+                "дармштадтий": "ds",
+                "гелий": "he", "ҳелий": "he",
+                "литий": "li",
+                "карбон": "c",
+                "азот": "n",
+                "оксиген": "o",
+                "алюминий": "al",
+                "оҳан": "fe",
+                "мис": "cu",
+                "нуқра": "ag",
+                "тилло": "au", "тило": "au",
+                "симоб": "hg",
+                "хлор": "cl",
+                "магний": "mg",
+                "кремний": "si",
+                "фосфор": "p",
+                "сулфур": "s",
+                "аргон": "ar",
+                "калий": "k",
+                "калсий": "ca",
+                "скандий": "sc",
+                "титан": "ti",
+                "ванадий": "v",
+                "хром": "cr",
+                "марганец": "mn",
+                "натрий": "na",
+                "неон": "ne",
+                "фтор": "f",
+                "руҳ": "zn",
+                "галлий": "ga",
+                "германий": "ge",
+                "бром": "br",
+                "криптон": "kr",
+                "рубидий": "rb",
+                "стронсий": "sr",
+                "иттрий": "y",
+                "цирконий": "zr",
+                "ниобий": "nb",
+                "молибден": "mo",
+                "рутений": "ru",
+                "родий": "rh",
+                "палладий": "pd",
+                "кадмий": "cd",
+                "индий": "in",
+                "сурма": "sb",
+                "қалъагӣ": "sn",
+                "теллур": "te",
+                "йод": "i",
+                "ксенон": "xe",
+                "цезий": "cs",
+                "барий": "ba",
+                "лантан": "la",
+                "волфрам": "w",
+                "празеодим": "pr",
+                "рений": "re",
+                "платина": "pt",
+                "иридий": "ir",
+                "осмий": "os",
+                "таллий": "tl",
+                "сурб": "pb",
+                "висмут": "bi",
+                "полоний": "po",
+                "уран": "u",
+                "радон": "rn",
+                "берилий": "br",
+                "бор": "b",
+                "колбат": "co",
+                "никел": "ni",
+                "селен": "se",
+                "технеций": "tc",
+                "лютеций": "lu",
+                "тантал": "ta",
+                "гафний": "hf",
+                "осмий": "os",
+                "астат": "at",
+                "радий": "ra",
+                "пулутоний": "pu",
+                "торий": "th",
+                "актиний": "ac",
+                "америсий": "am",
+                "торий": "e90",
+                "протактиний": "e91",
+                "нептуний": "e93",
+                "кюрий": "e96",
+                "берклий": "e97",
+                "калифорний": "e98",
+                "эйнштейний": "e99",
+                "фермий": "e100",
+                "менделевий": "e101",
+                "нобелий": "e102",
+                "лоуренсий": "e103",
+                "рентгений": "e111",
+                "копернисий": "e112",
+                "нихоний": "e113",
+                "флеровий": "e114",
+                "московий": "e115",
+                "ливерморий": "e116",
+                "теннесиний": "e117",
+                "оганессон": "e118",
+            };
+            const table = document.getElementById('periodic-table');
+            const totalElements = 118;
+
+            for (let i = 1; i <= totalElements; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'element-cell';
+                cell.dataset.number = i;
+                cell.title = `Элемент №${i}`;
+
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'element-number';
+                numberSpan.textContent = i;
+
+                const symbolSpan = document.createElement('span');
+                symbolSpan.className = 'element-symbol';
+                symbolSpan.textContent = '?';
+                symbolSpan.id = `symbol${i}`;
+
+                cell.appendChild(numberSpan);
+                cell.appendChild(symbolSpan);
+
+                cell.addEventListener('click', () => selectElement(i));
+
+                table.appendChild(cell);
+            }
+            async function selectElement(number) {
+                let symbol = null;
+                for (const [sym, data] of Object.entries(elementsDatabase)) {
+                    if (data.number === number) {
+                        symbol = sym;
+                        break;
+                    }
+                }
+                if (!symbol) {
+                    const dummyData = {
+                        name: `Элемент №${number}`,
+                        number: number,
+                        weight: "?",
+                        use: "Маълумот нест.",
+                        fact: "Маълумот нест.",
+                        danger: "Маълумот нест.",
+                        image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=300&fit=crop&auto=format"
+                    };
+                    displayElement(symbol || `E${number}`, dummyData);
+                    return;
+                }
+
+                const elementData = elementsDatabase[symbol];
+                displayElement(symbol, elementData);
+                const symbolSpan = document.getElementById(`symbol${number}`);
+                if (symbolSpan) {
+                    symbolSpan.textContent = elementData.symbol || symbol.toUpperCase();
+                }
+                document.querySelectorAll('.element-cell').forEach(cell => {
+                    cell.classList.remove('active');
+                });
+                const activeCell = document.querySelector(`.element-cell[data-number="${number}"]`);
+                if (activeCell) {
+                    activeCell.classList.add('active');
+                }
+            }
+            function displayElement(symbol, data) {
+                const displaySymbol = data.symbol || symbol.toUpperCase();
+                document.getElementById('selectedSymbol').textContent = displaySymbol;
+                document.getElementById('selectedName').textContent = data.name.split('(')[0].trim();
+                document.getElementById('selectedNumber').textContent = `#${data.number} | Атомӣ вазн: ${data.weight}`;
+                document.getElementById('selectedHeader').style.display = 'flex';
+                document.getElementById('detailSymbol').textContent = displaySymbol;
+                document.getElementById('detailNumber').textContent = `#${data.number}`;
+                document.getElementById('detailName').textContent = data.name;
+                document.getElementById('detailUse').textContent = data.use;
+                document.getElementById('detailFact').textContent = data.fact;
+                document.getElementById('detailDanger').textContent = data.danger;
+                document.getElementById('detailWeight').textContent = data.weight;
+                document.getElementById('elementImage').src = data.image;
+                document.getElementById('elementImage').alt = `Сурати ${data.name}`;
+                document.getElementById('detailCard').style.display = 'grid';
+            }
+            function searchElement() {
+                const input = document.getElementById('searchInput').value.trim().toLowerCase();
+                if (!input) return;
+
+                let symbol = nameToSymbol[input] || input;
+                if (!isNaN(input)) {
+                    const num = parseInt(input);
+                    if (num >= 1 && num <= 118) {
+                        selectElement(num);
+                        document.getElementById('searchInput').value = '';
+                        return;
+                    }
+                }
+                if (!elementsDatabase[symbol]) {
+                    for (const [sym, data] of Object.entries(elementsDatabase)) {
+                        if (data.name.toLowerCase().includes(input)) {
+                            symbol = sym;
+                            break;
+                        }
+                    }
+                }
+                if (elementsDatabase[symbol]) {
+                    displayElement(symbol, elementsDatabase[symbol]);
+                    for (const [sym, data] of Object.entries(elementsDatabase)) {
+                        if (sym === symbol) {
+                            selectElement(data.number);
+                            break;
+                        }
+                    }
+                } else {
+                    alert(`Элементи "${input}" дар система вуҷуд надорад.`);
+                }
+                document.getElementById('searchInput').value = '';
+            }
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') searchElement();
+            });
+            window.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    selectElement(1);
+                }, 300);
+            });
+            function populateTableSymbols() {
+                for (const [symbol, data] of Object.entries(elementsDatabase)) {
+                    const symbolSpan = document.getElementById(`symbol${data.number}`);
+                    if (symbolSpan) {
+                        symbolSpan.textContent = data.symbol || symbol.toUpperCase();
+                    }
+                }
+            }
+            window.onload = populateTableSymbols;
+        </script>
+</body>
+
+</html>

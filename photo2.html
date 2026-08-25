@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="tj">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Химия - Маълумот</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&family=Noto+Sans+Arabic:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rubik', 'Noto Sans Arabic', sans-serif;
+        }
+
+        body {
+            background: url('foto/malumot2.webp') center center / cover no-repeat fixed;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 40px;
+            border-bottom: 5px solid #ff9f1a;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        .header h1 i {
+            color: #ff9f1a;
+            margin-right: 15px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #d1d8e0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #ff9f1a;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn:hover {
+            background: #ff9f1a;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff9f1a;
+        }
+
+        .section {
+            background: rgba(30, 30, 46, 0.85);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border-left: 8px solid #ff9f1a;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: #ff9f1a;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h2 i {
+            font-size: 2.2rem;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 159, 26, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 159, 26, 0.1);
+        }
+
+        .card h3 {
+            color: #ff9f1a;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ff9f1a;
+            padding-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            color: #d1d8e0;
+            margin-bottom: 15px;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-top: 15px;
+            border: 3px solid #ff9f1a;
+        }
+
+        .scientist {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+        }
+
+        .scientist img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #ff9f1a;
+            object-fit: cover;
+        }
+
+        .scientist-info h4 {
+            font-size: 1.8rem;
+            color: #ff9f1a;
+            margin-bottom: 10px;
+        }
+
+        .scientist-info p {
+            color: #bdc3c7;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 2px dashed #ff9f1a;
+            text-align: center;
+            font-size: 1.5rem;
+            font-family: 'Courier New', monospace;
+            color: #00ffaa;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 40px 40px 0 0;
+            margin-top: 60px;
+            border-top: 5px solid #ff9f1a;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .footer-links a {
+            color: white;
+            font-size: 2rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ff9f1a;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .content {
+
+                grid-template-columns: 1fr;
+            }
+
+            .scientist {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-btn {
+                width: 90%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="photo3.html" style="display: inline-block; 
+              background: linear-gradient(to right, #00b09b, #96c93d);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+              transition: all 0.3s;">
+            <i class="fas fa-book"></i> Канкулятори Химияви
+        </a>
+        <a href="photo.html" style="display: inline-block; 
+              background: linear-gradient(to right, #00b09b, #96c93d);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(0, 176, 155, 0.4);
+              transition: all 0.3s;">
+            <i class="fas fa-table"></i> ҶАДВАЛИ МЕНДЕЛЕЕВ
+        </a>
+        <a href="photo4.html" style="display: inline-block; 
+              background: linear-gradient(to right, #00b09b, #96c93d);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+              transition: all 0.3s;">
+            <i class="fas fa-book"></i> ТЕСТХОИ ХИМИЯВИ
+        </a>
+    </div>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-atom"></i> ИЛМИ ХИМИЯ</h1>
+            <p>Дар ин саҳифа шумо ҳама маълумоти асосии химия, пайвастҳо, олимон ва таърихи ин илми ҷолибро хоҳед ёфт.
+            </p>
+        </header>
+        <section id="chemistry" class="section">
+            <h2><i class="fas fa-water"></i> ЧИСТ ХИМИЯ?</h2>
+            <div class="content">
+                <div class="card">
+                    <h3>Таъриф</h3>
+                    <p>Химия — илмест, ки сохт, хосиятҳо, табдилёбии моддаҳо ва инчунин энергияро дар раванди вокунишҳо
+                        меомӯзад. Ҳар чизе, ки масса дорад ва ҷой ишғол мекунад, модда номида мешавад.</p>
+                    <img src="foto/5.jpg" class="card-img" alt="Химия">
+                </div>
+                <div class="card">
+                    <h3>Асосҳои химия</h3>
+                    <p>Атом — хурдтарин ҷузъи модда. Атомҳо якҷоя шуда молекулаҳо ташкил медиҳанд. Намуна: ду атоми
+                        ҳидроген ва як атоми оксиген як молекулаи об (H₂O) ташкил медиҳанд.</p>
+                    <img src="foto/i (1).webp" class="card-img" alt="Атом">
+                </div>
+                <div class="card">
+                    <h3>Навъҳои вокунишҳо</h3>
+                    <ul style="color:#d1d8e0; padding-left:20px;">
+                        <li>Синтез (якҷояшавӣ): A + B → AB</li>
+                        <li>Таҳлил (порапорашавӣ): AB → A + B</li>
+                        <li>Иваз: AB + C → AC + B</li>
+                        <li>Ивази дучанда: AB + CD → AD + CB</li>
+                    </ul>
+                    <img src="foto/6.avif" class="card-img" alt="Вокуниш">
+                </div>
+            </div>
+        </section>
+        <section id="organic" class="section">
+            <h2><i class="fas fa-leaf"></i> КИМИЁИ ОРГАНИКӢ</h2>
+            <div class="content">
+                <div class="card">
+                    <h3>Чист химияи органикӣ?</h3>
+                    <p>Химияи органикӣ — шохае аз химия, ки пайвастҳои карбонро меомӯзад. Карбон қобилияти ташкили зиёда
+                        аз 10 миллион пайвастҳои гуногунро дорад. Нафт, пластмасса, доруҳо, равғанҳо, пахта — ҳама
+                        органикӣ ҳастанд.</p>
+                    <img src="foto/aximiyai organiki.avif" class="card-img" alt="Органика">
+                </div>
+                <div class="card">
+                    <h3>Гурӯҳҳои асосӣ</h3>
+                    <p><b>Алканҳо:</b> Пайванди якка — метан (CH₄), этан (C₂H₆).<br>
+                        <b>Алкенҳо:</b> Пайванди дучанда — этилен (C₂H₄).<br>
+                        <b>Алкинҳо:</b> Пайванди сечанда — ацетилен (C₂H₂).<br>
+                        <b>Спиртҳо:</b> Гурӯҳи OH доранд — этанол (C₂H₅OH).
+                    </p>
+                    <img src="foto/i.webp" class="card-img" alt="Структура">
+                </div>
+                <div class="card">
+                    <h3>Аҳамият</h3>
+                    <p>Бе химияи органикӣ мо доруҳои нав, пластик, рангҳо, воситаҳои химиявии кишоварзӣ надорем. Ҳаёти
+                        муосир бе пайвастҳои органикӣ имконнопазир аст.</p>
+                    <img src="foto/ahamiyat.jpg" class="card-img" alt="Аҳамият">
+                </div>
+            </div>
+        </section>
+        <section id="mendeleev" class="section">
+            <h2><i class="fas fa-table"></i> ДМИТРИЙ МЕНДЕЛЕЕВ</h2>
+            <div class="content">
+                <div class="card">
+                    <h3>Зиндагинома</h3>
+                    <p>Дмитрий Иванович Менделеев (8 феврали 1834, Тоболск — 2 феврали 1907, Санкт-Петербург) — химикди
+                        рус, оҳангсоз ва олими барҷаста. Ӯ ҷадвали давравии унсурҳои химиявиро тартиб дод, ки то ҳол
+                        асоси химия аст.</p>
+                    <img src="foto/менделеев 3.webp" class="card-img" alt="Ҷадвали Менделеев">
+                </div>
+                <div class="card">
+                    <h3>Кашфи ҷадвал</h3>
+                    <p>Соли 1869 Менделеев ҳангоми кор бо китоб ва маводи таълимӣ ба ин фикр расид, ки хосиятҳои унсурҳо
+                        ба вазнашон атомӣ вобастаанд. Вай унсурҳоро ба дастаҳо ҷудо карда, барои унсурҳои ноёфта ҷой
+                        холӣ гузошт.</p>
+                    <img src="foto/Jadvali davrii ximiya.webp" class="card-img" alt="Менделеев">
+                </div>
+                <div class="card">
+                    <h3>Меъёрҳои Менделеев</h3>
+                    <ul style="color:#d1d8e0; padding-left:20px;">
+                        <li>Хосиятҳои унсурҳо ба таври даврӣ такрор мешаванд.</li>
+                        <li>Вай пешгӯӣ кард, ки унсурҳои нав (масалан, галлий, германий) кашф карда мешаванд.</li>
+                        <li>Ҳоло ҷадвали Менделеев 118 унсурро дар бар мегирад.</li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=600&h=300&fit=crop"
+                        class="card-img" alt="Ҷадвал">
+                </div>
+            </div>
+        </section>
+        <section id="scientists" class="section">
+            <h2><i class="fas fa-user-tie"></i> ОЛИМОНИ БУЗУРГИ ХИМИЯ</h2>
+            <div class="scientist">
+                <img src="foto/Антуан Лавуазье.webp" alt="Лавуазье">
+                <div class="scientist-info">
+                    <h4>Антуан Лавуазье (1743–1794)</h4>
+                    <p>Падари химияи муосир. Ӯ қонуни ҳифзи массаро кашф кард ва номи «оксиген»-ро гузошт. Бо таҳқиқоти
+                        худ асоси химияи ғайриорганикӣ гузошт.</p>
+                </div>
+            </div>
+            <div class="scientist">
+                <img src="foto/Роберт Бойл.webp" alt="Бойл">
+                <div class="scientist-info">
+                    <h4>Роберт Бойл (1627–1691)</h4>
+                    <p>Нахустин олиме, ки таърифи муосири моддаро дод. Ӯ китоби «Кимиёгори шаффоф»-ро навишт ва химияро
+                        аз кимё ҷудо кард.</p>
+                </div>
+            </div>
+            <div class="scientist">
+                <img src="foto/Мария Кюри.webp" alt="Мария Кюри">
+                <div class="scientist-info">
+                    <h4>Мария Кюри (1867–1934)</h4>
+                    <p>Ду маротиба барандаи ҷоизаи Нобел. Радий ва полонийро кашф кард. Олими якум, ки барандаи ҷоизаи
+                        Нобел дар ду соҳаи гуногун (физика ва химия) шуд.</p>
+                </div>
+            </div>
+            <div class="scientist">
+                <img src="foto/Лайнус Полинг.webp" alt="Лайнус Полинг">
+                <div class="scientist-info">
+                    <h4>Лайнус Полинг (1901–1994)</h4>
+                    <p>Ду маротиба барандаи ҷоизаи Нобел (химия ва сулҳ). Ӯ назарияи пайванди химиявиро таҳия кард ва
+                        аҳамияи витамини C-ро дар тиб тадқиқ кард.</p>
+                </div>
+            </div>
+        </section>
+        <section id="formulas" class="section">
+            <h2><i class="fas fa-square-root-alt"></i> ФОРМУЛАҲОИ МУҲИМ</h2>
+            <div class="formula-box">H₂O — Об</div>
+            <div class="formula-box">CO₂ — Диоксиди карбон (гази карбонат)</div>
+            <div class="formula-box">CH₄ — Метан (гази табиӣ)</div>
+            <div class="formula-box">C₆H₁₂O₆ — Глюкоза (қанд)</div>
+            <div class="formula-box">NaCl — Намаки ош</div>
+            <div class="formula-box">H₂SO₄ — Кислотаи сулфат</div>
+            <div class="formula-box">NH₃ — Аммиак</div>
+            <div class="formula-box">C₂H₅OH — Этанол (спирт)</div>
+        </section>
+        <footer class="footer">
+            <p>© 2026 Илми Химия -</p>
+            <p>Ҳамаи маълумот барои омӯзиш аст.</p>
+            <P> Иҷрокунанда: Ҳасанов.О </P>
+        </footer>
+    </div>
+    <script>
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.boxShadow = '0 20px 40px rgba(255, 159, 26, 0.4)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.boxShadow = 'none';
+            });
+        });
+        const facts = [
+            "Карбон қобилияти ташкили зиёда аз 10 миллион пайвастҳои гуногунро дорад.",
+            "Дар офтоби мо ҳар сония 600 миллион тонна ҳидроген ба гелий табдил меёбад.",
+            "Об ягона моддаест, ки дар ҳарорати хона ба се ҳолат (мустаҳкам, моеъ, газ) вомехӯрад.",
+            "Одами миёна тақрибан 40 килограмм карбон дар таркиби бадан дорад."
+        ];
+        document.addEventListener('DOMContentLoaded', () => {
+            const fact = facts[Math.floor(Math.random() * facts.length)];
+            console.log(`Факти химиявӣ: ${fact}`);
+        });
+    </script>
+</body>
+
+</html>

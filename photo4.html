@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="tj">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест аз химия (25 савол, вақт)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #fff;
+            color: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .test-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 0 0 10px;
+            text-align: center;
+        }
+
+        .sub {
+            text-align: center;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #aaa;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .timer-block {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            background: #eee;
+            padding: 10px;
+            border: 1px solid #888;
+            margin-bottom: 15px;
+        }
+
+        .question-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #888;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+
+        .q-counter {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .q-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            border: 1px solid #888;
+            padding: 10px 15px;
+            background: #fff;
+        }
+
+        .option-item input[type="radio"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 20px;
+            accent-color: #000;
+        }
+
+        .option-item label {
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: #ddd;
+            border: 2px solid #333;
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 20px;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .nav-btn:hover {
+            background: #ccc;
+        }
+
+        .result-area {
+            border: 2px solid #222;
+            background: #eee;
+            font-size: 2.5rem;
+            text-align: center;
+            padding: 40px;
+            margin-top: 20px;
+        }
+
+        .restart-btn {
+            background: #bbb;
+            margin-top: 30px;
+            font-size: 1.8rem;
+            padding: 15px;
+            border: 2px solid #333;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /*для маленьких экранов */
+        @media (max-width: 600px) {
+            .q-text {
+                font-size: 1.4rem;
+            }
+
+            .option-item {
+                font-size: 1.2rem;
+            }
+
+            .timer-block {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-wrapper" id="testWrapper">
+        <h2>🧪 ТЕСТХО</h2>
+        <div class="sub">25 савол • ба ҳар савол 1 дақиқа</div>
+        <!-- PEREXOD -->
+        <div style="text-align: center; margin: 20px 0;">
+            <a href="photo3.html" style="display: inline-block; 
+              background: linear-gradient(to right, #606262, #5e605f);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(225, 225, 227, 0.4);
+              transition: all 0.3s;">
+                <i class="fas fa-book"></i> Канкулятори Химияви
+            </a>
+            <a href="photo2.html" style="display: inline-block; 
+              background: linear-gradient(to right, #595c5b, #676969);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(205, 206, 206, 0.4);
+              transition: all 0.3s;">
+                <i class="fas fa-book"></i> МАЪЛУМОТ ДАР БОРАИ ХИМИЯ
+            </a>
+            <a href="photo.html" style="display: inline-block; 
+              background: linear-gradient(to right, #4b4e4e, #777978);
+              color: white;
+              padding: 12px 30px;
+              border-radius: 50px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(171, 173, 173, 0.4);
+              transition: all 0.3s;">
+                <i class="fas fa-table"></i> ҶАДВАЛИ МЕНДЕЛЕЕВ
+            </a>
+        </div>
+
+        <!-- таймер -->
+        <div class="timer-block" id="timerDisplay">01:00</div>
+
+        <!-- саволи айни замона -->
+        <div id="questionArea" class="question-panel">
+            <div class="q-counter" id="questionCounter">Саволи 1 / 25</div>
+            <div class="q-text" id="questionText">Загрузка...</div>
+            <div class="options" id="optionsContainer"></div>
+        </div>
+
+        <!-- Тугмаи Ба саволи оянда  -->
+        <button class="nav-btn" id="nextBtn">▶ БА САВОЛИ ОЯНДА</button>
+
+        <!-- Блоки чавобхо -->
+        <div id="resultBlock" class="result-area hidden">
+            🏆 <span id="scoreValue">0</span> аз 25 дуруст
+            <button class="nav-btn restart-btn" id="restartBtn">🔁 Аз нав оғоз</button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            // ----------САВОЛҲО----------
+            const questions = [
+                {
+                    question: "Рамзи химиявии об кадом аст?",
+                    options: ["H₂O", "CO₂", "O₂", "NaCl"],
+                    correct: 0
+                },
+                {
+                    question: "Рамзи оксиген (Oxygen) чӣ гуна аст?",
+                    options: ["O", "O₂", "O₃", "OH"],
+                    correct: 0
+                },
+                {
+                    question: "Рамзи гидроген (Hydrogen) чӣ гуна аст?",
+                    options: ["H", "He", "Hg", "Ho"],
+                    correct: 0
+                },
+                {
+                    question: "Рамзи оҳан (Iron) кадом аст?",
+                    options: ["Ir", "Fe", "In", "I"],
+                    correct: 1
+                },
+                {
+                    question: "Рамзи тилло (Gold) чӣ гуна аст?",
+                    options: ["Go", "Gd", "Au", "Ag"],
+                    correct: 2
+                },
+                {
+                    question: "Рамзи нуқра (Silver) чӣ гуна аст?",
+                    options: ["Si", "Sl", "Ag", "Au"],
+                    correct: 2
+                },
+                {
+                    question: "Рамзи мис (Copper) кадом аст?",
+                    options: ["Co", "Cp", "Cu", "C"],
+                    correct: 2
+                },
+                {
+                    question: "Рамзи карбон (Carbon) чӣ гуна аст?",
+                    options: ["Ca", "C", "Co", "Cr"],
+                    correct: 1
+                },
+                {
+                    question: "Рамзи нитроген (Nitrogen) чӣ гуна аст?",
+                    options: ["Ni", "N", "Ng", "Na"],
+                    correct: 1
+                },
+                {
+                    question: "Рамзи калсий (Calcium) кадом аст?",
+                    options: ["Ca", "Cl", "C", "Ce"],
+                    correct: 0
+                },
+                {
+                    question: "Кадом газ барои сӯхтан (сӯзиш) лозим аст?",
+                    options: ["Оксиген (O₂)", "Нитроген (N₂)", "Карбон (IV) оксид", "Гидроген"],
+                    correct: 0
+                },
+                {
+                    question: "Массаи атомии оксиген тақрибан чанд аст?",
+                    options: ["8", "16", "32", "12"],
+                    correct: 1
+                },
+                {
+                    question: "Формулаи гази карбон (IV) оксид кадом аст?",
+                    options: ["CO", "CO₂", "C₂O", "CH₄"],
+                    correct: 1
+                },
+                {
+                    question: "Формулаи намаки ошӣ (намак) кадом аст?",
+                    options: ["KCl", "NaCl", "CaCl₂", "Na₂CO₃"],
+                    correct: 1
+                },
+                {
+                    question: "Кислотае, ки дар лимон мавҷуд аст?",
+                    options: ["Кислотаи лимон (C₆H₈O₇)", "Кислотаи уксус", "Кислотаи сулфат", "Кислотаи хлорид"],
+                    correct: 0
+                },
+                {
+                    question: "Ранги маҳлули сулфати мис (CuSO₄) чӣ гуна аст?",
+                    options: ["Сафед", "Зард", "Кабуд", "Сурх"],
+                    correct: 2
+                },
+                {
+                    question: "Кадом металл дар ҳарорати хонагӣ моеъ аст?",
+                    options: ["Оҳан", "Симоб (Hg)", "Алюминий", "Мис"],
+                    correct: 1
+                },
+                {
+                    question: "Газе, ки бештар дар ҳаво мавҷуд аст?",
+                    options: ["Оксиген", "Нитроген", "Карбон диоксид", "Аргон"],
+                    correct: 1
+                },
+                {
+                    question: "Элементи сабуктарин (камтарин масса) кадом аст?",
+                    options: ["Гелий", "Гидроген", "Литий", "Углерод"],
+                    correct: 1
+                },
+                {
+                    question: "Атоми кадом элемент дорои 6 протон аст?",
+                    options: ["Углерод (C)", "Оксиген (O)", "Нитроген (N)", "Неон (Ne)"],
+                    correct: 0
+                },
+                {
+                    question: "Шумораи электронҳо дар атоми оксиген (рақами атомӣ 8) дар ҳолати бетараф?",
+                    options: ["6", "8", "10", "16"],
+                    correct: 1
+                },
+                {
+                    question: "Валентнокии гидроген дар аксар пайвастагиҳо чанд аст?",
+                    options: ["1", "2", "3", "4"],
+                    correct: 0
+                },
+                {
+                    question: "Рамзи калий (Potassium) чӣ гуна аст?",
+                    options: ["P", "K", "Po", "Ka"],
+                    correct: 1
+                },
+                {
+                    question: "Рамзи натрий (Sodium) кадом аст?",
+                    options: ["S", "So", "Na", "Nd"],
+                    correct: 2
+                },
+                {
+                    question: "Формулаи химиявии гази оксиген кадом аст?",
+                    options: ["O", "O₂", "O₃", "H₂O"],
+                    correct: 1
+                }
+            ];
+
+            // Конфигурасия
+            const TOTAL_QS = questions.length;
+            let currentIndex = 0;
+            let userAnswers = new Array(TOTAL_QS).fill(null);
+            let timerInterval = null;
+            let timeLeft = 60;
+            const TIME_PER_QUESTION = 60;
+
+            // Элемент
+            const timerEl = document.getElementById('timerDisplay');
+            const qCounterEl = document.getElementById('questionCounter');
+            const qTextEl = document.getElementById('questionText');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const nextBtn = document.getElementById('nextBtn');
+            const questionArea = document.getElementById('questionArea');
+            const resultBlock = document.getElementById('resultBlock');
+            const scoreSpan = document.getElementById('scoreValue');
+            const restartBtn = document.getElementById('restartBtn');
+
+            // ---------- ФУНКСИЯХО ----------
+            function stopTimer() {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+            }
+
+            function startTimer() {
+                stopTimer();
+                timeLeft = TIME_PER_QUESTION;
+                updateTimerDisplay();
+
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+
+                    if (timeLeft <= 0) {
+                        stopTimer();
+                        moveToNextQuestion();
+                    }
+                }, 1000);
+            }
+
+            function updateTimerDisplay() {
+                const mins = Math.floor(Math.max(0, timeLeft) / 60);
+                const secs = Math.max(0, timeLeft) % 60;
+                timerEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            function renderQuestion() {
+                const q = questions[currentIndex];
+                qCounterEl.textContent = `Саволи ${currentIndex + 1} / ${TOTAL_QS}`;
+                qTextEl.textContent = q.question;
+
+                let htmlStr = '';
+                for (let i = 0; i < q.options.length; i++) {
+                    const checkedAttr = (userAnswers[currentIndex] === i) ? 'checked' : '';
+                    htmlStr += `
+                <div class="option-item">
+                    <input type="radio" name="qOption" value="${i}" id="opt${i}" ${checkedAttr}>
+                    <label for="opt${i}">${q.options[i]}</label>
+                </div>
+            `;
+                }
+                optionsContainer.innerHTML = htmlStr;
+
+                document.querySelectorAll('input[name="qOption"]').forEach(radio => {
+                    radio.addEventListener('change', function (e) {
+                        const selectedVal = parseInt(e.target.value);
+                        userAnswers[currentIndex] = selectedVal;
+                    });
+                });
+
+                startTimer();
+            }
+
+            function calculateScore() {
+                let correct = 0;
+                for (let i = 0; i < TOTAL_QS; i++) {
+                    if (userAnswers[i] !== null && userAnswers[i] === questions[i].correct) {
+                        correct++;
+                    }
+                }
+                return correct;
+            }
+
+            function moveToNextQuestion() {
+                stopTimer();
+
+                if (currentIndex === TOTAL_QS - 1) {
+                    showResults();
+                    return;
+                }
+
+                currentIndex++;
+                renderQuestion();
+            }
+
+            function showResults() {
+                stopTimer();
+                questionArea.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                resultBlock.classList.remove('hidden');
+                const finalScore = calculateScore();
+                scoreSpan.textContent = finalScore;
+            }
+
+            function restartTest() {
+                stopTimer();
+                currentIndex = 0;
+                userAnswers = new Array(TOTAL_QS).fill(null);
+                questionArea.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+                resultBlock.classList.add('hidden');
+                renderQuestion();
+            }
+
+            function onNextClick() {
+                moveToNextQuestion();
+            }
+
+            // Инисиализасия
+            function initTest() {
+                resultBlock.classList.add('hidden');
+                questionArea.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+                restartTest(); // аз саволи 1сар мекунад
+            }
+
+            nextBtn.addEventListener('click', onNextClick);
+            restartBtn.addEventListener('click', restartTest);
+
+            initTest();
+        })();
+    </script>
+</body>
+
+</html>
