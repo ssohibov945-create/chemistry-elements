@@ -361,8 +361,8 @@
 <body>
     <div class="app">
         <div class="header">
-            <h1>SCANNERI ELEMENTHO</h1>
-            <p class="subtitle">ҶАДВАЛИ ДАВРИИ ЭЛЕМЕНТХОИ ХИМИЯИ - 118 ЭЛЕМЕНТ</p>
+            <h1 data-i18n="siteTitle">SCANNERI ELEMENTHO</h1>
+            <p class="subtitle" data-i18n="subtitle">ҶАДВАЛИ ДАВРИИ ЭЛЕМЕНТХОИ ХИМИЯИ - 118 ЭЛЕМЕНТ</p>
         </div>
         <div style="text-align: center; margin: 20px 0;">
             <a href="photo3.html" style="display: inline-block; 
@@ -375,7 +375,7 @@
               font-size: 1.1rem;
               box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
               transition: all 0.3s;">
-                <i class="fas fa-book"></i> Канкулятори Химияви
+                <i class="fas fa-book"></i> <span data-i18n="btnCalc">Канкулятори Химияви</span>
             </a>
             <a href="photo2.html" style="display: inline-block; 
               background: linear-gradient(to right, #00b09b, #219b87);
@@ -387,7 +387,7 @@
               font-size: 1.1rem;
               box-shadow: 0 5px 15px rgba(33, 193, 137, 0.4);
               transition: all 0.3s;">
-                <i class="fas fa-book"></i> МАЪЛУМОТ ДАР БОРАИ ХИМИЯ
+                <i class="fas fa-book"></i> <span data-i18n="btnInfo">МАЪЛУМОТ ДАР БОРАИ ХИМИЯ</span>
             </a>
                 <a href="photo4.html" style="display: inline-block; 
               background: linear-gradient(to right, #00b09b, #19b883);
@@ -399,13 +399,13 @@
               font-size: 1.1rem;
               box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
               transition: all 0.3s;">
-                    <i class="fas fa-book"></i> ТЕСТХОИ ХИМИЯВИ
+                    <i class="fas fa-book"></i> <span data-i18n="btnTest">ТЕСТХОИ ХИМИЯВИ</span>
                 </a>
             </div>
             <div class="search-box">
                 <input type="text" class="search-input" id="searchInput"
-                    placeholder="Номи элемент ё рамзи онро ворид кунед..." autocomplete="off" autofocus>
-                <button class="search-btn" onclick="searchElement()">ҶУСТАН</button>
+                    placeholder="Номи элемент ё рамзи онро ворид кунед..." data-i18n-placeholder="searchPlaceholder" autocomplete="off" autofocus>
+                <button class="search-btn" onclick="searchElement()" data-i18n="searchBtn">ҶУСТАН</button>
             </div>
             <div id="selectedHeader" class="selected-header" style="display: none;">
                 <div class="selected-symbol" id="selectedSymbol">H</div>
@@ -415,7 +415,7 @@
                 </div>
             </div>
             <div class="table-container">
-                <div class="table-title">ҶАДВАЛИ ДАВРИИ Д.И. МЕНДЕЛЕЕВ</div>
+                <div class="table-title" data-i18n="tableTitle">ҶАДВАЛИ ДАВРИИ Д.И. МЕНДЕЛЕЕВ</div>
                 <div id="periodic-table">
                 </div>
             </div>
@@ -428,26 +428,26 @@
                     <span class="detail-name" id="detailName">Ҳидроген (H)</span>
 
                     <div class="info-block">
-                        <span class="info-label">ИСТИФОДАБАРИИ АСОСӢ</span>
+                        <span class="info-label" data-i18n="labelUse">ИСТИФОДАБАРИИ АСОСӢ</span>
                         <span class="info-text" id="detailUse">Сӯзишвории мушакҳо ва ситораҳо.</span>
                     </div>
 
                     <div class="info-block">
-                        <span class="info-label">ХОСИЯТҲОИ ҶОЛИБ</span>
+                        <span class="info-label" data-i18n="labelFact">ХОСИЯТҲОИ ҶОЛИБ</span>
                         <span class="info-text" id="detailFact">Элементи аз ҳама паҳншуда дар Коинот.</span>
                     </div>
                     <div class="info-block">
-                        <span class="info-label">ХАТАРНОКӢ</span>
+                        <span class="info-label" data-i18n="labelDanger">ХАТАРНОКӢ</span>
                         <span class="info-text" id="detailDanger">Тарканда аст.</span>
                     </div>
                     <div class="info-block">
-                        <span class="info-label">ВАЗНИ АТОМИ</span>
+                        <span class="info-label" data-i18n="labelWeight">ВАЗНИ АТОМИ</span>
                         <span class="info-text" id="detailWeight">1.008</span>
                     </div>
                 </div>
                 <div class="detail-photo">
                     <img id="elementImage" class="element-image" src="" alt="Сурати элемент">
-                    <div class="photo-label">СУРАТИ ЭЛЕМЕНТ</div>
+                    <div class="photo-label" data-i18n="photoLabel">СУРАТИ ЭЛЕМЕНТ</div>
                 </div>
             </div>
         </div>
@@ -646,6 +646,7 @@
                 setTimeout(() => selectElement(1), 300);
             });
         </script>
+<script src="js/i18n.js"></script>
 </body>
 
 </html>
