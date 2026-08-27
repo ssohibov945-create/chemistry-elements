@@ -1,418 +1,139 @@
 <!DOCTYPE html>
-<html lang="tJ">
+<html lang="tj">
 
 <head>
     <meta charset="UTF-8">
-    <title>Калкулятори Химиявӣ - Ҳисобкунаки Молярӣ</title>
+    <title data-i18n="calcTitle">Калкулятори Химиявӣ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: url('foto/канкулятор.jpeg') center center / cover no-repeat fixed;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
-            min-height: 100vh;
-            justify-content: center;
-            margin: 0;
-        }
-
-        .nav {
-            background: rgba(22, 189, 122, 0.9);
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            border-bottom: 5px solid #00ff88;
-        }
-
-        .nav a {
-            color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: bold;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid transparent;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 180px;
-            justify-content: center;
-        }
-
-        .nav a:hover {
-            background: rgba(0, 255, 136, 0.7);
-            transform: translateY(-3px);
-        }
-
-        .nav a.active {
-            background: #00ff88;
-            color: black;
-            border-color: white;
-            box-shadow: 0 0 25px #00ff88;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px;
-        }
-
-        .header {
-            text-align: center;
-            padding: 50px 20px;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #00ff88, #00ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: none !important;
-
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            color: #aaa;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .calculator-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
-        .calculator-box {
-            background: rgba(30, 30, 60, 0.8);
-            border-radius: 20px;
-            padding: 30px;
-            border: 2px solid rgba(0, 255, 136, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-        }
-
-        .calculator-box:hover {
-            border-color: #00ff88;
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .calculator-box h2 {
-            color: #00ff88;
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 2px solid #00ff88;
-            padding-bottom: 10px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ccc;
-            font-weight: bold;
-        }
-
-        .input-group input,
-        .input-group select,
-        .input-group textarea {
-            width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #333;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            font-size: 1.1rem;
-            transition: border 0.3s;
-        }
-
-        .input-group input:focus,
-        .input-group select:focus,
-        .input-group textarea:focus {
-            border-color: #00ff88;
-            outline: none;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-        }
-
-        .btn {
-            background: linear-gradient(to right, #00ff88, #00ccff);
-            color: black;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.5);
-        }
-
-        .result-box {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 25px;
-            border-left: 5px solid #00ff88;
-            font-size: 1.3rem;
-            color: #00ff88;
-            font-weight: bold;
-            text-align: center;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .formula {
-            font-family: 'Courier New', monospace;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            color: #ffcc00;
-            text-align: center;
-            font-size: 1.4rem;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.8);
-            border-top: 5px solid #00ff88;
-            margin-top: 60px;
-            border-radius: 30px 30px 0 0;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .nav {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .nav a {
-                width: 90%;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: url('foto/канкулятор.jpeg') center center / cover no-repeat fixed; color: #fff; padding: 20px; min-height: 100vh; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px; }
+        .header { text-align: center; padding: 50px 20px; margin-bottom: 40px; }
+        .header h1 { font-size: 3.5rem; margin-bottom: 15px; background: linear-gradient(to right, #00ff88, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header p { font-size: 1.2rem; color: #aaa; max-width: 800px; margin: 0 auto; }
+        .calculator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 50px; }
+        .calculator-box { background: rgba(30, 30, 60, 0.8); border-radius: 20px; padding: 30px; border: 2px solid rgba(0, 255, 136, 0.3); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); transition: all 0.3s; }
+        .calculator-box:hover { border-color: #00ff88; box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2); transform: translateY(-5px); }
+        .calculator-box h2 { color: #00ff88; margin-bottom: 25px; font-size: 1.8rem; display: flex; align-items: center; gap: 15px; border-bottom: 2px solid #00ff88; padding-bottom: 10px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; color: #ccc; font-weight: bold; }
+        .input-group input, .input-group select { width: 100%; padding: 15px; border-radius: 10px; border: 2px solid #333; background: rgba(0, 0, 0, 0.5); color: white; font-size: 1.1rem; }
+        .input-group input:focus, .input-group select:focus { border-color: #00ff88; outline: none; box-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+        .btn { background: linear-gradient(to right, #00ff88, #00ccff); color: black; border: none; padding: 15px 30px; border-radius: 10px; font-size: 1.2rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; transition: all 0.3s; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0, 255, 136, 0.5); }
+        .result-box { background: rgba(0, 0, 0, 0.3); padding: 25px; border-radius: 15px; margin-top: 25px; border-left: 5px solid #00ff88; font-size: 1.3rem; color: #00ff88; font-weight: bold; text-align: center; min-height: 80px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .formula { font-family: 'Courier New', monospace; background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 10px; margin: 15px 0; color: #ffcc00; text-align: center; font-size: 1.4rem; }
+        .footer { text-align: center; padding: 40px; background: rgba(0, 0, 0, 0.8); border-top: 5px solid #00ff88; margin-top: 60px; border-radius: 30px 30px 0 0; }
+        @media (max-width: 768px) { .calculator-grid { grid-template-columns: 1fr; } .header h1 { font-size: 2.5rem; } }
     </style>
 </head>
 
 <body>
     <div style="text-align: center; margin: 20px 0;">
-        <a href="photo2.html" style="display: inline-block; 
-              background: linear-gradient(to right, #00b09b, #076f50);
-              color: white;
-              padding: 12px 30px;
-              border-radius: 50px;
-              text-decoration: none;
-              font-weight: bold;
-              font-size: 1.1rem;
-              box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-              transition: all 0.3s;">
-            <i class="fas fa-book"></i> МАЪЛУМОТ ДАР БОРАИ ХИМИЯ
+        <a href="photo2.html" style="display: inline-block; background: linear-gradient(to right, #00b09b, #076f50); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin: 5px;">
+            <i class="fas fa-book"></i> <span data-i18n="btnInfo">МАЪЛУМОТ ДАР БОРАИ ХИМИЯ</span>
         </a>
-        <a href="photo.html" style="display: inline-block; 
-              background: linear-gradient(to right, #0f8c75, #0d7e5a);
-              color: white;
-              padding: 12px 30px;
-              border-radius: 50px;
-              text-decoration: none;
-              font-weight: bold;
-              font-size: 1.1rem;
-              box-shadow: 0 5px 15px rgba(0, 176, 155, 0.4);
-              transition: all 0.3s;">
-            <i class="fas fa-table"></i> ҶАДВАЛИ МЕНДЕЛЕЕВ
+        <a href="photo.html" style="display: inline-block; background: linear-gradient(to right, #0f8c75, #0d7e5a); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin: 5px;">
+            <i class="fas fa-table"></i> <span data-i18n="btnTable">ҶАДВАЛИ МЕНДЕЛЕЕВ</span>
         </a>
-        <a href="photo4.html" style="display: inline-block; 
-              background: linear-gradient(to right, #00b09b, #076f50);
-              color: white;
-              padding: 12px 30px;
-              border-radius: 50px;
-              text-decoration: none;
-              font-weight: bold;
-              font-size: 1.1rem;
-              box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-              transition: all 0.3s;">
-            <i class="fas fa-book"></i> ТЕСТХОИ ХИМИЯВИ
+        <a href="photo4.html" style="display: inline-block; background: linear-gradient(to right, #00b09b, #076f50); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin: 5px;">
+            <i class="fas fa-book"></i> <span data-i18n="btnTest">ТЕСТХОИ ХИМИЯВИ</span>
         </a>
-        <div class="container">
-            <div class="header">
-                <h1><i class="fas fa-calculator"></i> КАЛКУЛЯТОРИ ХИМИЯВӢ</h1>
-                <p>Ҳисобкунаки молярӣ, мувозанати муодилаҳо, концентрасияи ҳаллиҳо ва дигар асбобҳои ҳисоббарории
-                    химиявӣ
-                </p>
+    </div>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-calculator"></i> <span data-i18n="calcTitle">КАЛКУЛЯТОРИ ХИМИЯВӢ</span></h1>
+            <p data-i18n="calcSubtitle">Ҳисобкунаки молярӣ, мувозанати муодилаҳо, концентрасияи ҳаллиҳо ва дигар асбобҳои ҳисоббарории химиявӣ</p>
+        </div>
+        <div class="calculator-grid">
+            <div class="calculator-box">
+                <h2><i class="fas fa-weight-hanging"></i> <span data-i18n="molarTitle">ВАЗНИ АТОМИ</span></h2>
+                <div class="input-group">
+                    <label data-i18n="formulaLabel">Формулаи модда (масалан: H2O, NaCl, C6H12O6):</label>
+                    <input type="text" id="formulaInput" placeholder="Fe2O3">
+                </div>
+                <button class="btn" onclick="calculateMolarMass()" data-i18n="calcBtn">ҲИСОБ КУН</button>
+                <div class="result-box" id="molarResult" data-i18n="molarPlaceholder">Вазни молярӣ дар ин ҷо пайдо мешавад...</div>
+                <div class="formula">M = Σ(n × Ar)</div>
             </div>
-            <div class="calculator-grid">
-                <div class="calculator-box">
-                    <h2><i class="fas fa-weight-hanging"></i> ВАЗНИ АТОМИ</h2>
-                    <div class="input-group">
-                        <label>Формулаи модда (масалан: H2O, NaCl, C6H12O6):</label>
-                        <input type="text" id="formulaInput" placeholder="Fe2O3">
-                    </div>
-                    <button class="btn" onclick="calculateMolarMass()">ҲИСОБ КУН</button>
-                    <div class="result-box" id="molarResult">
-                        Вазни молярӣ дар ин ҷо пайдо мешавад...
-                    </div>
-                    <div class="formula">M = Σ(n × Ar)</div>
+            <div class="calculator-box">
+                <h2><i class="fas fa-vial"></i> <span data-i18n="concTitle">КОНСЕНТРАТСИЯ</span></h2>
+                <div class="input-group">
+                    <label data-i18n="massLabel">Вазни модда (грамм):</label>
+                    <input type="number" id="massInput" placeholder="10">
                 </div>
-                <div class="calculator-box">
-                    <h2><i class="fas fa-vial"></i> КОНСЕНТРАТСИЯ</h2>
-                    <div class="input-group">
-                        <label>Вазни модда (грамм):</label>
-                        <input type="number" id="massInput" placeholder="10">
-                    </div>
-                    <div class="input-group">
-                        <label>Вазни атоми (г/моль):</label>
-                        <input type="number" id="molarInput" placeholder="58.44">
-                    </div>
-                    <div class="input-group">
-                        <label>Ҳаҷми ҳал (литр):</label>
-                        <input type="number" id="volumeInput" placeholder="0.5">
-                    </div>
-                    <button class="btn" onclick="calculateConcentration()">ҲИСОБ КУН</button>
-                    <div class="result-box" id="concentrationResult">
-                        Концентрасия дар ин ҷо пайдо мешавад...
-                    </div>
-                    <div class="formula">C = n / V</div>
+                <div class="input-group">
+                    <label data-i18n="molarMassLabel">Вазни атоми (г/моль):</label>
+                    <input type="number" id="molarInput" placeholder="58.44">
                 </div>
-                <div class="calculator-box">
-                    <h2><i class="fas fa-balance-scale"></i> МУВОЗАНАТИ МУОДИЛА</h2>
-                    <div class="input-group">
-                        <label>Муодилаи ғайримувозанат (масалан: H2 + O2 → H2O):</label>
-                        <input type="text" id="equationInput" placeholder="Fe + O2 → Fe2O3">
-                    </div>
-                    <button class="btn" onclick="balanceEquation()">МУВОЗАНАТ КУН</button>
-                    <div class="result-box" id="balanceResult">
-                        Муодилаи мувозанат дар ин ҷо пайдо мешавад...
-                    </div>
-                    <div class="formula">Реактсия = Маҳсулот</div>
+                <div class="input-group">
+                    <label data-i18n="volumeLabel">Ҳаҷми ҳал (литр):</label>
+                    <input type="number" id="volumeInput" placeholder="0.5">
                 </div>
-                <div class="calculator-box">
-                    <h2><i class="fas fa-exchange-alt"></i> ТАБДИЛИ МОЛ ВА ГРАММ</h2>
-                    <div class="input-group">
-                        <label>Миқдор:</label>
-                        <input type="number" id="amountInput" placeholder="2">
-                    </div>
-                    <div class="input-group">
-                        <label>Навъи табдил:</label>
-                        <select id="conversionType">
-                            <option value="molToGram">Мол → Грамм</option>
-                            <option value="gramToMol">Грамм → Мол</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label>Вазни молярӣ (г/моль):</label>
-                        <input type="number" id="molarForConv" placeholder="18">
-                    </div>
-                    <button class="btn" onclick="convertMoleGram()">ТАБДИЛ ДEҲ</button>
-                    <div class="result-box" id="conversionResult">
-                        Натиҷа дар ин ҷо пайдо мешавад...
-                    </div>
-                    <div class="formula">n = m / M</div>
-                </div>
+                <button class="btn" onclick="calculateConcentration()" data-i18n="calcBtn">ҲИСОБ КУН</button>
+                <div class="result-box" id="concentrationResult" data-i18n="concPlaceholder">Концентрасия дар ин ҷо пайдо мешавад...</div>
+                <div class="formula">C = n / V</div>
             </div>
-            <div class="calculator-box" style="grid-column: 1 / -1;">
-                <h2><i class="fas fa-atom"></i> ВАЗНИ АТОМИИ УНСУРҲО</h2>
-                <div
-                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;">
-                    <div
-                        style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;">
-                        <strong>H:</strong> 1.008
-                    </div>
-                    <div
-                        style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;">
-                        <strong>C:</strong> 12.011
-                    </div>
-                    <div
-                        style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;">
-                        <strong>O:</strong> 15.999
-                    </div>
-                    <div
-                        style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;">
-                        <strong>N:</strong> 14.007
-                    </div>
-                    <div
-                        style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;">
-                        <strong>Na:</strong> 22.990
-                    </div>
-                    <div
-                        style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;">
-                        <strong>Cl:</strong> 35.45
-                    </div>
-                    <div
-                        style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;">
-                        <strong>Fe:</strong> 55.845
-                    </div>
-                    <div
-                        style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;">
-                        <strong>S:</strong> 32.06
-                    </div>
+            <div class="calculator-box">
+                <h2><i class="fas fa-balance-scale"></i> <span data-i18n="balanceTitle">МУВОЗАНАТИ МУОДИЛА</span></h2>
+                <div class="input-group">
+                    <label data-i18n="equationLabel">Муодилаи ғайримувозанат (масалан: H2 + O2 → H2O):</label>
+                    <input type="text" id="equationInput" placeholder="Fe + O2 → Fe2O3">
                 </div>
-                <p style="margin-top: 20px; color: #ccc; text-align: center;">Барои дигар унсурҳо ба ҷадвали Менделеев
-                    нигаред</p>
+                <button class="btn" onclick="balanceEquation()" data-i18n="balanceBtn">МУВОЗАНАТ КУН</button>
+                <div class="result-box" id="balanceResult" data-i18n="balancePlaceholder">Муодилаи мувозанат дар ин ҷо пайдо мешавад...</div>
+                <div class="formula">Реактсия = Маҳсулот</div>
+            </div>
+            <div class="calculator-box">
+                <h2><i class="fas fa-exchange-alt"></i> <span data-i18n="convertTitle">ТАБДИЛИ МОЛ ВА ГРАММ</span></h2>
+                <div class="input-group">
+                    <label data-i18n="amountLabel">Миқдор:</label>
+                    <input type="number" id="amountInput" placeholder="2">
+                </div>
+                <div class="input-group">
+                    <label data-i18n="convertTypeLabel">Навъи табдил:</label>
+                    <select id="conversionType">
+                        <option value="molToGram" data-i18n="molToGram">Мол → Грамм</option>
+                        <option value="gramToMol" data-i18n="gramToMol">Грамм → Мол</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label data-i18n="molarMassLabel">Вазни молярӣ (г/моль):</label>
+                    <input type="number" id="molarForConv" placeholder="18">
+                </div>
+                <button class="btn" onclick="convertMoleGram()" data-i18n="convertBtn">ТАБДИЛ ДEҲ</button>
+                <div class="result-box" id="conversionResult" data-i18n="convertPlaceholder">Натиҷа дар ин ҷо пайдо мешавад...</div>
+                <div class="formula">n = m / M</div>
             </div>
         </div>
-        <!--VIDEOXOI KORI AMALI-->
-        <div style="text-align: center; margin: 30px auto; max-width: 1200px;">
-            <h3 style="color: #0d9583; margin-bottom: 20px;">
-                <i class="fab fa-youtube"></i> КОРҲОИ АМАЛӢ
-            </h3>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-                <a href="https://youtu.be/UQ_S0ibGOQ4?si=61u5thruMbElIGyM" target="_blank"
-                    style="display: inline-block; background: #0d9583; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">
-                    <i class="fab fa-youtube"></i> КОРИ АМАЛИ 1
-                </a>
-                <a href="https://youtu.be/xtmZIK5DMDA?si=qdH3ufcKXfBOXN_D" target="_blank"
-                    style="display: inline-block; background: #0d9583; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">
-                    <i class="fab fa-youtube"></i> КОРИ АМАЛИ 2
-                </a>
-                <a href="https://youtu.be/idMHxF2169s?si=Mx4jTGQ1RcziUBSJ" target="_blank"
-                    style="display: inline-block; background: #0d9583; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">
-                    <i class="fab fa-youtube"></i> КОРИ АМАЛИ 3
-                </a>
+        <div class="calculator-box" style="grid-column: 1 / -1;">
+            <h2><i class="fas fa-atom"></i> <span data-i18n="atomicWeightsTitle">ВАЗНИ АТОМИИ УНСУРҲО</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;">
+                <div style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;"><strong>H:</strong> 1.008</div>
+                <div style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;"><strong>C:</strong> 12.011</div>
+                <div style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;"><strong>O:</strong> 15.999</div>
+                <div style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;"><strong>N:</strong> 14.007</div>
+                <div style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;"><strong>Na:</strong> 22.990</div>
+                <div style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;"><strong>Cl:</strong> 35.45</div>
+                <div style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;"><strong>Fe:</strong> 55.845</div>
+                <div style="background: rgba(0,255,136,0.1); padding: 15px; border-radius: 10px; text-align: center;"><strong>S:</strong> 32.06</div>
             </div>
+            <p style="margin-top: 20px; color: #ccc; text-align: center;" data-i18n="seeTable">Барои дигар унсурҳо ба ҷадвали Менделеев нигаред</p>
         </div>
-        <div class="footer">
-            <h3>Калкулятори Химиявӣ</h3>
-            <p style="margin: 20px 0; color: #aaa;">Барои омухтани пайвастшави</p>
-            <p style="color: #00ff88;">Иҷрокунанда: Хасанов.O
+    </div>
+    <div style="text-align: center; margin: 30px auto; max-width: 1200px;">
+        <h3 style="color: #0d9583; margin-bottom: 20px;" data-i18n="practicalTitle"><i class="fab fa-youtube"></i> КОРҲОИ АМАЛӢ</h3>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+            <a href="https://youtu.be/UQ_S0ibGOQ4?si=61u5thruMbElIGyM" target="_blank" style="display: inline-block; background: #0d9583; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold;"><i class="fab fa-youtube"></i> <span data-i18n="practical1">КОРИ АМАЛИ 1</span></a>
+            <a href="https://youtu.be/xtmZIK5DMDA?si=qdH3ufcKXfBOXN_D" target="_blank" style="display: inline-block; background: #0d9583; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold;"><i class="fab fa-youtube"></i> <span data-i18n="practical2">КОРИ АМАЛИ 2</span></a>
+            <a href="https://youtu.be/idMHxF2169s?si=Mx4jTGQ1RcziUBSJ" target="_blank" style="display: inline-block; background: #0d9583; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold;"><i class="fab fa-youtube"></i> <span data-i18n="practical3">КОРИ АМАЛИ 3</span></a>
         </div>
-        </p>
+    </div>
+    <div class="footer">
+        <h3 data-i18n="calcTitle">Калкулятори Химиявӣ</h3>
+        <p style="margin: 20px 0; color: #aaa;" data-i18n="calcFooter">Барои омухтани пайвастшави</p>
+        <p style="color: #00ff88;">Иҷрокунанда: Хасанов.O</p>
     </div>
     <script>
         const atomicMasses = {
@@ -425,12 +146,10 @@
         function calculateMolarMass() {
             const formula = document.getElementById('formulaInput').value.trim();
             if (!formula) {
-                document.getElementById('molarResult').innerHTML = '⚠️ Лутфан формуларо ворид кунед!';
+                document.getElementById('molarResult').innerHTML = (window.i18n ? i18n.t('enterFormula') : '⚠️ Лутфан формуларо ворид кунед!');
                 return;
             }
-            let total = 0;
-            let currentElement = '';
-            let currentNumber = '';
+            let total = 0, currentElement = '', currentNumber = '';
             for (let i = 0; i < formula.length; i++) {
                 const char = formula[i];
                 if (char >= 'A' && char <= 'Z') {
@@ -439,13 +158,9 @@
                         const count = currentNumber ? parseInt(currentNumber) : 1;
                         total += mass * count;
                     }
-                    currentElement = char;
-                    currentNumber = '';
-                } else if (char >= 'a' && char <= 'z') {
-                    currentElement += char;
-                } else if (char >= '0' && char <= '9') {
-                    currentNumber += char;
-                }
+                    currentElement = char; currentNumber = '';
+                } else if (char >= 'a' && char <= 'z') { currentElement += char; }
+                else if (char >= '0' && char <= '9') { currentNumber += char; }
             }
             if (currentElement) {
                 const mass = atomicMasses[currentElement] || 0;
@@ -453,10 +168,9 @@
                 total += mass * count;
             }
             if (total === 0) {
-                document.getElementById('molarResult').innerHTML = '⚠️ Формула нодуруст аст!';
+                document.getElementById('molarResult').innerHTML = (window.i18n ? i18n.t('badFormula') : '⚠️ Формула нодуруст аст!');
             } else {
-                document.getElementById('molarResult').innerHTML =
-                    `📊 <strong>${formula}</strong><br>Вазни атоми = <strong>${total.toFixed(3)} г/моль</strong>`;
+                document.getElementById('molarResult').innerHTML = `📊 <strong>${formula}</strong><br>${window.i18n ? i18n.t('molarResultPrefix') : 'Вазни атоми ='} <strong>${total.toFixed(3)} г/моль</strong>`;
             }
         }
         function calculateConcentration() {
@@ -464,53 +178,26 @@
             const molar = parseFloat(document.getElementById('molarInput').value);
             const volume = parseFloat(document.getElementById('volumeInput').value);
             if (!mass || !molar || !volume) {
-                document.getElementById('concentrationResult').innerHTML = '⚠️ Ҳамаи майдонҳоро пур кунед!';
+                document.getElementById('concentrationResult').innerHTML = (window.i18n ? i18n.t('fillAll') : '⚠️ Ҳамаи майдонҳоро пур кунед!');
                 return;
             }
             const moles = mass / molar;
             const concentration = moles / volume;
-            document.getElementById('concentrationResult').innerHTML =
-                `🧪 Миқдори модда = <strong>${moles.toFixed(4)} моль</strong><br>
-                 Концентрасия = <strong>${concentration.toFixed(4)} моль/л</strong>`;
+            document.getElementById('concentrationResult').innerHTML = `🧪 ${window.i18n ? i18n.t('molUnit') : 'моль'} = <strong>${moles.toFixed(4)}</strong><br>${window.i18n ? i18n.t('concUnit') : 'моль/л'} = <strong>${concentration.toFixed(4)}</strong>`;
         }
         function balanceEquation() {
             const equation = document.getElementById('equationInput').value;
             const simpleBalances = {
-                'H2 + O2 → H2O': '2H₂ + O₂ → 2H₂O',
-                'Fe + O2 → Fe2O3': '4Fe + 3O₂ → 2Fe₂O₃',
-                'Na + Cl2 → NaCl': '2Na + Cl₂ → 2NaCl',
-                'CH4 + O2 → CO2 + H2O': 'CH₄ + 2O₂ → CO₂ + 2H₂O',
-                'Al + O2 → Al2O3': '4Al + 3O₂ → 2Al₂O₃',
-                'P + O2 → P2O5': '4P + 5O₂ → 2P₂O₅',
-                'KClO3 → KCl + O2': '2KClO₃ → 2KCl + 3O₂',
-                'Zn + HCl → ZnCl2 + H2': 'Zn + 2HCl → ZnCl₂ + H₂',
-                'C3H8 + O2 → CO2 + H2O': 'C₃H₈ + 5O₂ → 3CO₂ + 4H₂O',
-                'N2 + H2 → NH3': 'N₂ + 3H₂ → 2NH₃',
-                'Fe + Cl2 → FeCl3': '2Fe + 3Cl₂ → 2FeCl₃',
-                'Mg + O2 → MgO': '2Mg + O₂ → 2MgO',
-                'Li + H2O → LiOH + H2': '2Li + 2H₂O → 2LiOH + H₂',
-                'C2H6 + O2 → CO2 + H2O': '2C₂H₆ + 7O₂ → 4CO₂ + 6H₂O',
-                'AgNO3 + Cu → Cu(NO3)2 + Ag': '2AgNO₃ + Cu → Cu(NO₃)₂ + 2Ag',
-                'N2 + H2 → NH3': 'N₂ + 3H₂ → 2NH₃',
-                'S + O2 → SO2': 'S + O₂ → SO₂',
-                'SO2 + O2 → SO3': '2SO₂ + O₂ → 2SO₃',
-                'CO + O2 → CO2': '2CO + O₂ → 2CO₂',
-                'K + H2O → KOH + H2': '2K + 2H₂O → 2KOH + H₂',
-                'Ca + O2 → CaO': '2Ca + O₂ → 2CaO',
-                'H2O2 → H2O + O2': '2H₂O₂ → 2H₂O + O₂',
-                'CuO + H2 → Cu + H2O': 'CuO + H₂ → Cu + H₂O',
-                'HCl + NaOH → NaCl + H2O': 'HCl + NaOH → NaCl + H₂O',
-                'AgNO3 + NaCl → AgCl + NaNO3': 'AgNO₃ + NaCl → AgCl + NaNO₃',
-                'C + O2 → CO2': 'C + O₂ → CO₂',
-                'H2 + Cl2 → HCl': 'H₂ + Cl₂ → 2HCl',
-                'Cu + O2 → CuO': '2Cu + O₂ → 2CuO',
+                'H2 + O2 → H2O': '2H₂ + O₂ → 2H₂O', 'Fe + O2 → Fe2O3': '4Fe + 3O₂ → 2Fe₂O₃',
+                'Na + Cl2 → NaCl': '2Na + Cl₂ → 2NaCl', 'CH4 + O2 → CO2 + H2O': 'CH₄ + 2O₂ → CO₂ + 2H₂O',
+                'Al + O2 → Al2O3': '4Al + 3O₂ → 2Al₂O₃', 'N2 + H2 → NH3': 'N₂ + 3H₂ → 2NH₃',
+                'Mg + O2 → MgO': '2Mg + O₂ → 2MgO', 'C + O2 → CO2': 'C + O₂ → CO₂',
+                'H2 + Cl2 → HCl': 'H₂ + Cl₂ → 2HCl'
             };
             if (simpleBalances[equation]) {
-                document.getElementById('balanceResult').innerHTML =
-                    `⚖️ <strong>${simpleBalances[equation]}</strong>`;
+                document.getElementById('balanceResult').innerHTML = `⚖️ <strong>${simpleBalances[equation]}</strong>`;
             } else {
-                document.getElementById('balanceResult').innerHTML =
-                    '🔍 Ин муодила дар система нест. Барои мувозанат кардан кӯшиш кунед: 2H₂ + O₂ → 2H₂O';
+                document.getElementById('balanceResult').innerHTML = (window.i18n ? i18n.t('equationNotFound') : '🔍 Ин муодила дар система нест.');
             }
         }
         function convertMoleGram() {
@@ -518,18 +205,15 @@
             const type = document.getElementById('conversionType').value;
             const molar = parseFloat(document.getElementById('molarForConv').value);
             if (!amount || !molar) {
-                document.getElementById('conversionResult').innerHTML = '⚠️ Миқдор ва вазни моляриро ворид кунед!';
+                document.getElementById('conversionResult').innerHTML = (window.i18n ? i18n.t('enterAmount') : '⚠️ Миқдор ва вазни моляриро ворид кунед!');
                 return;
             }
-            let result;
             if (type === 'molToGram') {
-                result = amount * molar;
-                document.getElementById('conversionResult').innerHTML =
-                    `⚖️ <strong>${amount} моль</strong> = <strong>${result.toFixed(3)} грамм</strong>`;
+                const result = amount * molar;
+                document.getElementById('conversionResult').innerHTML = `⚖️ <strong>${amount} ${window.i18n ? i18n.t('molUnit') : 'моль'}</strong> = <strong>${result.toFixed(3)} ${window.i18n ? i18n.t('gramUnit') : 'грамм'}</strong>`;
             } else {
-                result = amount / molar;
-                document.getElementById('conversionResult').innerHTML =
-                    `⚖️ <strong>${amount} грамм</strong> = <strong>${result.toFixed(4)} моль</strong>`;
+                const result = amount / molar;
+                document.getElementById('conversionResult').innerHTML = `⚖️ <strong>${amount} ${window.i18n ? i18n.t('gramUnit') : 'грамм'}</strong> = <strong>${result.toFixed(4)} ${window.i18n ? i18n.t('molUnit') : 'моль'}</strong>`;
             }
         }
         document.addEventListener('DOMContentLoaded', function () {
@@ -538,6 +222,6 @@
             calculateMolarMass();
         });
     </script>
+<script src="js/i18n.js"></script>
 </body>
-
 </html>
