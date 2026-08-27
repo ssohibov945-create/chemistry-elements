@@ -1,6 +1,7 @@
 /**
  * SCANNERI ELEMENTHO — complete i18n (tg default, ru, en)
  * localStorage key: siteLang
+ * Requires js/elements-i18n.js for element translations
  */
 (function (global) {
   'use strict';
@@ -23,7 +24,6 @@
       photoLabel: 'СУРАТИ ЭЛЕМЕНТ',
       noData: 'Маълумот дар база нест.',
       notFound: 'Элемент ёфт нашуд.',
-      atomicWeightPrefix: 'ВАЗНИ АТОМИ',
       infoTitle: 'ИЛМИ ХИМИЯ',
       infoIntro: 'Дар ин саҳифа шумо ҳама маълумоти асосии химия, пайвастҳо, олимон ва таърихи ин илми ҷолибро хоҳед ёфт.',
       calcTitle: 'КАЛКУЛЯТОРИ ХИМИЯВӢ',
@@ -70,7 +70,40 @@
       restartBtn: '🔁 Аз нав оғоз',
       questionOf: 'Саволи {n} / {total}',
       scoreText: 'аз 25 дуруст',
-      loading: 'Загрузка...'
+      loading: 'Загрузка...',
+      whatIsChem: 'ЧИСТ ХИМИЯ?',
+      defTitle: 'Таъриф',
+      defText: 'Химия — илмест, ки сохт, хосиятҳо, табдилёбии моддаҳо ва инчунин энергияро дар раванди вокунишҳо меомӯзад. Ҳар чизе, ки масса дорад ва ҷой ишғол мекунад, модда аст.',
+      basicsTitle: 'Асосҳои химия',
+      basicsText: 'Атом — хурдтарин ҷузъи модда. Атомҳо якҷоя шуда молекулаҳо ташкил медиҳанд. Намуна: ду атоми ҳидроген ва як атоми оксиген як молекулаи об (H₂O) ташкил медиҳанд.',
+      reactionsTitle: 'Навъҳои вокунишҳо',
+      reaction1: 'Синтез (якҷояшавӣ): A + B → AB',
+      reaction2: 'Таҳлил (порапорашавӣ): AB → A + B',
+      reaction3: 'Иваз: AB + C → AC + B',
+      reaction4: 'Ивази дучанда: AB + CD → AD + CB',
+      organicTitle: 'КИМИЁИ ОРГАНИКӢ',
+      organicWhat: 'Чист химияи органикӣ?',
+      organicText: 'Химияи органикӣ — шохае аз химия, ки пайвастҳои карбонро меомӯзад. Карбон қобилияти ташкили зиёда аз 10 миллион пайвастҳои гуногунро дорад. Нафт, пластик, доруҳо — ҳама аз пайвастҳои органикӣ иборатанд.',
+      groupsTitle: 'Гурӯҳҳои асосӣ',
+      groupsText: 'Алканҳо: Пайванди якка — метан (CH₄), этан (C₂H₆). Алкенҳо: Пайванди дучанда — этилен (C₂H₄). Алкинҳо: Пайванди сечанда — ацетилен (C₂H₂). Спиртҳо: Гурӯҳи OH — этанол (C₂H₅OH).',
+      importanceTitle: 'Аҳамият',
+      importanceText: 'Бе химияи органикӣ мо доруҳои нав, пластик, рангҳо, воситаҳои химиявии кишоварзӣ надорем. Ҳаёти муосир бе пайвастҳои органикӣ имконнопазир аст.',
+      mendeleevTitle: 'ДМИТРИЙ МЕНДЕЛЕЕВ',
+      bioTitle: 'Зиндагинома',
+      bioText: 'Дмитрий Иванович Менделеев (8 феврали 1834, Тоболск — 2 феврали 1907, Санкт-Петербург) — химикди рус, оҳангсоз ва олими барҷаста. Ӯ ҷадвали давравии элементҳои химиявиро кашф кард.',
+      discoveryTitle: 'Кашфи ҷадвал',
+      discoveryText: 'Соли 1869 Менделеев ҳангоми кор бо китоб ва маводи таълимӣ ба ин фикр расид, ки хосиятҳои унсурҳо ба вазнашон атомӣ вобастаанд. Вай унсурҳоро ба давраҳо гурӯҳбандӣ кард.',
+      criteriaTitle: 'Меъёрҳои Менделеев',
+      criteria1: 'Хосиятҳои унсурҳо ба таври даврӣ такрор мешаванд.',
+      criteria2: 'Вай пешгӯӣ кард, ки унсурҳои нав (масалан, галлий, скандий) кашф мешаванд.',
+      criteria3: 'Ҷадвал асоси химияи муосир гардид.',
+      scientistsTitle: 'ОЛИМОНИ БУЗУРГИ ХИМИЯ',
+      lavoisierBio: 'Падари химияи муосир. Ӯ қонуни ҳифзи массаро кашф кард ва номи «оксиген»-ро гузошт. Бо таҳқиқоти худ асоси химияи ғайриорганикӣ гузошт.',
+      boyleBio: 'Нахустин олиме, ки таърифи муосири моддаро дод. Ӯ китоби «Кимиёгори шаффоф»-ро навишт ва қонуни Бойлро кашф кард.',
+      curieBio: 'Ду маротиба барандаи ҷоизаи Нобел. Радий ва полонийро кашф кард. Олими якум, ки барандаи ҷоизаи Нобел дар ду соҳа шуд.',
+      paulingBio: 'Ду маротиба барандаи ҷоизаи Нобел (химия ва сулҳ). Ӯ назарияи пайванди химиявиро таҳия кард ва барои сулҳ мубориза бурд.',
+      formulasTitle: 'ФОРМУЛАҲОИ МУҲИМ',
+      footerInfo: 'Ҳамаи маълумот барои омӯзиш аст.'
     },
     ru: {
       siteTitle: 'SCANNERI ELEMENTHO',
@@ -89,7 +122,6 @@
       photoLabel: 'ФОТО ЭЛЕМЕНТА',
       noData: 'Данных в базе нет.',
       notFound: 'Элемент не найден.',
-      atomicWeightPrefix: 'АТОМНАЯ МАССА',
       infoTitle: 'НАУКА ХИМИЯ',
       infoIntro: 'На этой странице вы найдёте основную информацию о химии, соединениях, учёных и истории этой увлекательной науки.',
       calcTitle: 'ХИМИЧЕСКИЙ КАЛЬКУЛЯТОР',
@@ -136,7 +168,40 @@
       restartBtn: '🔁 Начать заново',
       questionOf: 'Вопрос {n} / {total}',
       scoreText: 'из 25 правильных',
-      loading: 'Загрузка...'
+      loading: 'Загрузка...',
+      whatIsChem: 'ЧТО ТАКОЕ ХИМИЯ?',
+      defTitle: 'Определение',
+      defText: 'Химия — наука, изучающая строение, свойства, превращения веществ, а также энергию в процессе реакций. Всё, что имеет массу и занимает место, является веществом.',
+      basicsTitle: 'Основы химии',
+      basicsText: 'Атом — мельчайшая частица вещества. Атомы соединяются, образуя молекулы. Пример: два атома водорода и один атом кислорода образуют молекулу воды (H₂O).',
+      reactionsTitle: 'Типы реакций',
+      reaction1: 'Синтез (соединение): A + B → AB',
+      reaction2: 'Разложение: AB → A + B',
+      reaction3: 'Замещение: AB + C → AC + B',
+      reaction4: 'Обмен: AB + CD → AD + CB',
+      organicTitle: 'ОРГАНИЧЕСКАЯ ХИМИЯ',
+      organicWhat: 'Что такое органическая химия?',
+      organicText: 'Органическая химия — раздел химии, изучающий соединения углерода. Углерод способен образовывать более 10 миллионов различных соединений. Нефть, пластик, лекарства — всё состоит из органических соединений.',
+      groupsTitle: 'Основные группы',
+      groupsText: 'Алканы: одинарная связь — метан (CH₄), этан (C₂H₆). Алкены: двойная связь — этилен (C₂H₄). Алкины: тройная связь — ацетилен (C₂H₂). Спирты: группа OH — этанол (C₂H₅OH).',
+      importanceTitle: 'Значение',
+      importanceText: 'Без органической химии у нас не было бы новых лекарств, пластика, красок, средств химической защиты растений. Современная жизнь невозможна без органических соединений.',
+      mendeleevTitle: 'ДМИТРИЙ МЕНДЕЛЕЕВ',
+      bioTitle: 'Биография',
+      bioText: 'Дмитрий Иванович Менделеев (8 февраля 1834, Тобольск — 2 февраля 1907, Санкт-Петербург) — русский химик, композитор и выдающийся учёный. Он открыл периодическую таблицу химических элементов.',
+      discoveryTitle: 'Открытие таблицы',
+      discoveryText: 'В 1869 году Менделеев, работая над книгой и учебными материалами, пришёл к мысли, что свойства элементов зависят от их атомной массы. Он расположил элементы по периодам.',
+      criteriaTitle: 'Принципы Менделеева',
+      criteria1: 'Свойства элементов периодически повторяются.',
+      criteria2: 'Он предсказал открытие новых элементов (например, галлия, скандия).',
+      criteria3: 'Таблица стала основой современной химии.',
+      scientistsTitle: 'ВЕЛИКИЕ УЧЁНЫЕ-ХИМИКИ',
+      lavoisierBio: 'Отец современной химии. Открыл закон сохранения массы и дал название «кислород». Своими исследованиями заложил основы неорганической химии.',
+      boyleBio: 'Первый учёный, давший современное определение вещества. Написал книгу «Скептический химик» и открыл закон Бойля.',
+      curieBio: 'Дважды лауреат Нобелевской премии. Открыла радий и полоний. Первая учёная, получившая Нобелевскую премию в двух областях.',
+      paulingBio: 'Дважды лауреат Нобелевской премии (химия и мир). Разработал теорию химической связи и боролся за мир.',
+      formulasTitle: 'ВАЖНЫЕ ФОРМУЛЫ',
+      footerInfo: 'Вся информация предназначена для обучения.'
     },
     en: {
       siteTitle: 'SCANNERI ELEMENTHO',
@@ -155,7 +220,6 @@
       photoLabel: 'ELEMENT PHOTO',
       noData: 'No data in the database.',
       notFound: 'Element not found.',
-      atomicWeightPrefix: 'ATOMIC WEIGHT',
       infoTitle: 'THE SCIENCE OF CHEMISTRY',
       infoIntro: 'On this page you will find the main information about chemistry, compounds, scientists and the history of this fascinating science.',
       calcTitle: 'CHEMISTRY CALCULATOR',
@@ -202,7 +266,40 @@
       restartBtn: '🔁 Restart',
       questionOf: 'Question {n} / {total}',
       scoreText: 'out of 25 correct',
-      loading: 'Loading...'
+      loading: 'Loading...',
+      whatIsChem: 'WHAT IS CHEMISTRY?',
+      defTitle: 'Definition',
+      defText: 'Chemistry is the science that studies the structure, properties and transformations of substances, as well as energy in reactions. Everything that has mass and occupies space is matter.',
+      basicsTitle: 'Basics of chemistry',
+      basicsText: 'An atom is the smallest particle of matter. Atoms combine to form molecules. Example: two hydrogen atoms and one oxygen atom form a water molecule (H₂O).',
+      reactionsTitle: 'Types of reactions',
+      reaction1: 'Synthesis (combination): A + B → AB',
+      reaction2: 'Decomposition: AB → A + B',
+      reaction3: 'Substitution: AB + C → AC + B',
+      reaction4: 'Double displacement: AB + CD → AD + CB',
+      organicTitle: 'ORGANIC CHEMISTRY',
+      organicWhat: 'What is organic chemistry?',
+      organicText: 'Organic chemistry is the branch of chemistry that studies carbon compounds. Carbon can form more than 10 million different compounds. Oil, plastic, medicines — all consist of organic compounds.',
+      groupsTitle: 'Main groups',
+      groupsText: 'Alkanes: single bond — methane (CH₄), ethane (C₂H₆). Alkenes: double bond — ethylene (C₂H₄). Alkynes: triple bond — acetylene (C₂H₂). Alcohols: OH group — ethanol (C₂H₅OH).',
+      importanceTitle: 'Importance',
+      importanceText: 'Without organic chemistry we would not have new medicines, plastics, paints or agricultural chemicals. Modern life is impossible without organic compounds.',
+      mendeleevTitle: 'DMITRI MENDELEEV',
+      bioTitle: 'Biography',
+      bioText: 'Dmitri Ivanovich Mendeleev (8 February 1834, Tobolsk — 2 February 1907, St Petersburg) was a Russian chemist, composer and outstanding scientist. He discovered the periodic table of chemical elements.',
+      discoveryTitle: 'Discovery of the table',
+      discoveryText: 'In 1869, while working on a book and teaching materials, Mendeleev realised that the properties of elements depend on their atomic mass. He arranged the elements into periods.',
+      criteriaTitle: "Mendeleev's principles",
+      criteria1: 'The properties of elements repeat periodically.',
+      criteria2: 'He predicted the discovery of new elements (e.g. gallium, scandium).',
+      criteria3: 'The table became the foundation of modern chemistry.',
+      scientistsTitle: 'GREAT CHEMISTS',
+      lavoisierBio: 'Father of modern chemistry. Discovered the law of conservation of mass and named oxygen. His research laid the foundations of inorganic chemistry.',
+      boyleBio: 'The first scientist to give a modern definition of matter. Wrote "The Sceptical Chymist" and discovered Boyle\'s law.',
+      curieBio: 'Two-time Nobel Prize winner. Discovered radium and polonium. First scientist to win Nobel Prizes in two fields.',
+      paulingBio: 'Two-time Nobel Prize winner (chemistry and peace). Developed the theory of chemical bonding and campaigned for peace.',
+      formulasTitle: 'IMPORTANT FORMULAS',
+      footerInfo: 'All information is for educational purposes.'
     }
   };
 
@@ -307,6 +404,13 @@
     return quizQuestions[currentLang] || quizQuestions.tg;
   }
 
+  function getElementData(symbol) {
+    if (typeof elementsI18n === 'undefined') return null;
+    const key = (symbol || '').toLowerCase();
+    const langData = elementsI18n[currentLang] || elementsI18n.tg;
+    return langData[key] || (elementsI18n.tg && elementsI18n.tg[key]) || null;
+  }
+
   function setLanguage(lang) {
     if (!translations[lang]) lang = 'tg';
     currentLang = lang;
@@ -335,21 +439,11 @@
   function injectSwitcher() {
     if (document.getElementById('lang-switcher')) return;
     const style = document.createElement('style');
-    style.textContent = `
-      #lang-switcher{position:fixed;top:20px;right:20px;z-index:1000;display:flex;gap:6px;background:rgba(10,15,20,0.85);padding:6px 8px;border-radius:30px;border:1px solid #00ffcc55;backdrop-filter:blur(8px);box-shadow:0 4px 20px rgba(0,255,204,0.15)}
-      .lang-btn{background:transparent;border:none;color:#aaa;font-size:0.85rem;font-weight:700;padding:6px 12px;border-radius:20px;cursor:pointer;transition:all 0.25s ease;letter-spacing:0.5px}
-      .lang-btn:hover{color:#00ffcc;background:rgba(0,255,204,0.1)}
-      .lang-btn.active{color:#000;background:linear-gradient(135deg,#00ffcc,#00ccaa);box-shadow:0 0 12px rgba(0,255,204,0.6)}
-      @media(max-width:480px){#lang-switcher{top:10px;right:10px;padding:4px 6px}.lang-btn{font-size:0.75rem;padding:5px 9px}}
-    `;
+    style.textContent = `#lang-switcher{position:fixed;top:20px;right:20px;z-index:1000;display:flex;gap:6px;background:rgba(10,15,20,0.85);padding:6px 8px;border-radius:30px;border:1px solid #00ffcc55;backdrop-filter:blur(8px);box-shadow:0 4px 20px rgba(0,255,204,0.15)}.lang-btn{background:transparent;border:none;color:#aaa;font-size:0.85rem;font-weight:700;padding:6px 12px;border-radius:20px;cursor:pointer;transition:all 0.25s ease}.lang-btn:hover{color:#00ffcc;background:rgba(0,255,204,0.1)}.lang-btn.active{color:#000;background:linear-gradient(135deg,#00ffcc,#00ccaa);box-shadow:0 0 12px rgba(0,255,204,0.6)}@media(max-width:480px){#lang-switcher{top:10px;right:10px;padding:4px 6px}.lang-btn{font-size:0.75rem;padding:5px 9px}}`;
     document.head.appendChild(style);
     const switcher = document.createElement('div');
     switcher.id = 'lang-switcher';
-    switcher.innerHTML = `
-      <button class="lang-btn" data-lang="tg" title="Тоҷикӣ">🇹🇯 ТОҶ</button>
-      <button class="lang-btn" data-lang="ru" title="Русский">🇷🇺 РУС</button>
-      <button class="lang-btn" data-lang="en" title="English">🇬🇧 ENG</button>
-    `;
+    switcher.innerHTML = '<button class="lang-btn" data-lang="tg" title="Тоҷикӣ">🇹🇯 ТОҶ</button><button class="lang-btn" data-lang="ru" title="Русский">🇷🇺 РУС</button><button class="lang-btn" data-lang="en" title="English">🇬🇧 ENG</button>';
     document.body.appendChild(switcher);
     switcher.querySelectorAll('.lang-btn').forEach(btn => {
       btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
@@ -357,11 +451,7 @@
   }
 
   global.i18n = {
-    t,
-    setLanguage,
-    initLanguage,
-    injectSwitcher,
-    getQuizQuestions,
+    t, setLanguage, initLanguage, injectSwitcher, getQuizQuestions, getElementData,
     get currentLang() { return currentLang; },
     translations
   };
