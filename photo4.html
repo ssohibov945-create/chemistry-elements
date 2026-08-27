@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест аз химия (25 савол, вақт)</title>
+    <title data-i18n="testTitle">Тест аз химия</title>
     <style>
         * {
             box-sizing: border-box;
@@ -143,7 +143,6 @@
             display: none;
         }
 
-        /*для маленьких экранов */
         @media (max-width: 600px) {
             .q-text {
                 font-size: 1.4rem;
@@ -162,9 +161,8 @@
 
 <body>
     <div class="test-wrapper" id="testWrapper">
-        <h2>🧪 ТЕСТХО</h2>
-        <div class="sub">25 савол • ба ҳар савол 1 дақиқа</div>
-        <!-- PEREXOD -->
+        <h2 data-i18n="testTitle">🧪 ТЕСТХО</h2>
+        <div class="sub" data-i18n="testSub">25 савол • ба ҳар савол 1 дақиқа</div>
         <div style="text-align: center; margin: 20px 0;">
             <a href="photo3.html" style="display: inline-block; 
               background: linear-gradient(to right, #606262, #5e605f);
@@ -176,7 +174,7 @@
               font-size: 1.1rem;
               box-shadow: 0 5px 15px rgba(225, 225, 227, 0.4);
               transition: all 0.3s;">
-                <i class="fas fa-book"></i> Канкулятори Химияви
+                <i class="fas fa-book"></i> <span data-i18n="btnCalc">Канкулятори Химияви</span>
             </a>
             <a href="photo2.html" style="display: inline-block; 
               background: linear-gradient(to right, #595c5b, #676969);
@@ -188,7 +186,7 @@
               font-size: 1.1rem;
               box-shadow: 0 5px 15px rgba(205, 206, 206, 0.4);
               transition: all 0.3s;">
-                <i class="fas fa-book"></i> МАЪЛУМОТ ДАР БОРАИ ХИМИЯ
+                <i class="fas fa-book"></i> <span data-i18n="btnInfo">МАЪЛУМОТ ДАР БОРАИ ХИМИЯ</span>
             </a>
             <a href="photo.html" style="display: inline-block; 
               background: linear-gradient(to right, #4b4e4e, #777978);
@@ -200,170 +198,47 @@
               font-size: 1.1rem;
               box-shadow: 0 5px 15px rgba(171, 173, 173, 0.4);
               transition: all 0.3s;">
-                <i class="fas fa-table"></i> ҶАДВАЛИ МЕНДЕЛЕЕВ
+                <i class="fas fa-table"></i> <span data-i18n="btnTable">ҶАДВАЛИ МЕНДЕЛЕЕВ</span>
             </a>
         </div>
 
-        <!-- таймер -->
         <div class="timer-block" id="timerDisplay">01:00</div>
 
-        <!-- саволи айни замона -->
         <div id="questionArea" class="question-panel">
             <div class="q-counter" id="questionCounter">Саволи 1 / 25</div>
             <div class="q-text" id="questionText">Загрузка...</div>
             <div class="options" id="optionsContainer"></div>
         </div>
 
-        <!-- Тугмаи Ба саволи оянда  -->
-        <button class="nav-btn" id="nextBtn">▶ БА САВОЛИ ОЯНДА</button>
+        <button class="nav-btn" id="nextBtn" data-i18n="nextBtn">▶ БА САВОЛИ ОЯНДА</button>
 
-        <!-- Блоки чавобхо -->
         <div id="resultBlock" class="result-area hidden">
-            🏆 <span id="scoreValue">0</span> аз 25 дуруст
-            <button class="nav-btn restart-btn" id="restartBtn">🔁 Аз нав оғоз</button>
+            🏆 <span id="scoreValue">0</span> <span data-i18n="scoreText">аз 25 дуруст</span>
+            <button class="nav-btn restart-btn" id="restartBtn" data-i18n="restartBtn">🔁 Аз нав оғоз</button>
         </div>
     </div>
 
     <script>
         (function () {
-            // ----------САВОЛҲО----------
-            const questions = [
-                {
-                    question: "Рамзи химиявии об кадом аст?",
-                    options: ["H₂O", "CO₂", "O₂", "NaCl"],
-                    correct: 0
-                },
-                {
-                    question: "Рамзи оксиген (Oxygen) чӣ гуна аст?",
-                    options: ["O", "O₂", "O₃", "OH"],
-                    correct: 0
-                },
-                {
-                    question: "Рамзи гидроген (Hydrogen) чӣ гуна аст?",
-                    options: ["H", "He", "Hg", "Ho"],
-                    correct: 0
-                },
-                {
-                    question: "Рамзи оҳан (Iron) кадом аст?",
-                    options: ["Ir", "Fe", "In", "I"],
-                    correct: 1
-                },
-                {
-                    question: "Рамзи тилло (Gold) чӣ гуна аст?",
-                    options: ["Go", "Gd", "Au", "Ag"],
-                    correct: 2
-                },
-                {
-                    question: "Рамзи нуқра (Silver) чӣ гуна аст?",
-                    options: ["Si", "Sl", "Ag", "Au"],
-                    correct: 2
-                },
-                {
-                    question: "Рамзи мис (Copper) кадом аст?",
-                    options: ["Co", "Cp", "Cu", "C"],
-                    correct: 2
-                },
-                {
-                    question: "Рамзи карбон (Carbon) чӣ гуна аст?",
-                    options: ["Ca", "C", "Co", "Cr"],
-                    correct: 1
-                },
-                {
-                    question: "Рамзи нитроген (Nitrogen) чӣ гуна аст?",
-                    options: ["Ni", "N", "Ng", "Na"],
-                    correct: 1
-                },
-                {
-                    question: "Рамзи калсий (Calcium) кадом аст?",
-                    options: ["Ca", "Cl", "C", "Ce"],
-                    correct: 0
-                },
-                {
-                    question: "Кадом газ барои сӯхтан (сӯзиш) лозим аст?",
-                    options: ["Оксиген (O₂)", "Нитроген (N₂)", "Карбон (IV) оксид", "Гидроген"],
-                    correct: 0
-                },
-                {
-                    question: "Массаи атомии оксиген тақрибан чанд аст?",
-                    options: ["8", "16", "32", "12"],
-                    correct: 1
-                },
-                {
-                    question: "Формулаи гази карбон (IV) оксид кадом аст?",
-                    options: ["CO", "CO₂", "C₂O", "CH₄"],
-                    correct: 1
-                },
-                {
-                    question: "Формулаи намаки ошӣ (намак) кадом аст?",
-                    options: ["KCl", "NaCl", "CaCl₂", "Na₂CO₃"],
-                    correct: 1
-                },
-                {
-                    question: "Кислотае, ки дар лимон мавҷуд аст?",
-                    options: ["Кислотаи лимон (C₆H₈O₇)", "Кислотаи уксус", "Кислотаи сулфат", "Кислотаи хлорид"],
-                    correct: 0
-                },
-                {
-                    question: "Ранги маҳлули сулфати мис (CuSO₄) чӣ гуна аст?",
-                    options: ["Сафед", "Зард", "Кабуд", "Сурх"],
-                    correct: 2
-                },
-                {
-                    question: "Кадом металл дар ҳарорати хонагӣ моеъ аст?",
-                    options: ["Оҳан", "Симоб (Hg)", "Алюминий", "Мис"],
-                    correct: 1
-                },
-                {
-                    question: "Газе, ки бештар дар ҳаво мавҷуд аст?",
-                    options: ["Оксиген", "Нитроген", "Карбон диоксид", "Аргон"],
-                    correct: 1
-                },
-                {
-                    question: "Элементи сабуктарин (камтарин масса) кадом аст?",
-                    options: ["Гелий", "Гидроген", "Литий", "Углерод"],
-                    correct: 1
-                },
-                {
-                    question: "Атоми кадом элемент дорои 6 протон аст?",
-                    options: ["Углерод (C)", "Оксиген (O)", "Нитроген (N)", "Неон (Ne)"],
-                    correct: 0
-                },
-                {
-                    question: "Шумораи электронҳо дар атоми оксиген (рақами атомӣ 8) дар ҳолати бетараф?",
-                    options: ["6", "8", "10", "16"],
-                    correct: 1
-                },
-                {
-                    question: "Валентнокии гидроген дар аксар пайвастагиҳо чанд аст?",
-                    options: ["1", "2", "3", "4"],
-                    correct: 0
-                },
-                {
-                    question: "Рамзи калий (Potassium) чӣ гуна аст?",
-                    options: ["P", "K", "Po", "Ka"],
-                    correct: 1
-                },
-                {
-                    question: "Рамзи натрий (Sodium) кадом аст?",
-                    options: ["S", "So", "Na", "Nd"],
-                    correct: 2
-                },
-                {
-                    question: "Формулаи химиявии гази оксиген кадом аст?",
-                    options: ["O", "O₂", "O₃", "H₂O"],
-                    correct: 1
+            function getQuestions() {
+                if (window.i18n && typeof i18n.getQuizQuestions === 'function') {
+                    return i18n.getQuizQuestions().map(item => ({
+                        question: item.q,
+                        options: item.o,
+                        correct: item.c
+                    }));
                 }
-            ];
+                return [];
+            }
 
-            // Конфигурасия
-            const TOTAL_QS = questions.length;
+            let questions = getQuestions();
+            let TOTAL_QS = questions.length || 25;
             let currentIndex = 0;
             let userAnswers = new Array(TOTAL_QS).fill(null);
             let timerInterval = null;
             let timeLeft = 60;
             const TIME_PER_QUESTION = 60;
 
-            // Элемент
             const timerEl = document.getElementById('timerDisplay');
             const qCounterEl = document.getElementById('questionCounter');
             const qTextEl = document.getElementById('questionText');
@@ -374,7 +249,6 @@
             const scoreSpan = document.getElementById('scoreValue');
             const restartBtn = document.getElementById('restartBtn');
 
-            // ---------- ФУНКСИЯХО ----------
             function stopTimer() {
                 if (timerInterval) {
                     clearInterval(timerInterval);
@@ -386,11 +260,9 @@
                 stopTimer();
                 timeLeft = TIME_PER_QUESTION;
                 updateTimerDisplay();
-
                 timerInterval = setInterval(() => {
                     timeLeft--;
                     updateTimerDisplay();
-
                     if (timeLeft <= 0) {
                         stopTimer();
                         moveToNextQuestion();
@@ -405,8 +277,15 @@
             }
 
             function renderQuestion() {
+                questions = getQuestions();
+                TOTAL_QS = questions.length;
+                if (!questions.length) {
+                    qTextEl.textContent = (window.i18n ? i18n.t('loading') : 'Loading...');
+                    return;
+                }
                 const q = questions[currentIndex];
-                qCounterEl.textContent = `Саволи ${currentIndex + 1} / ${TOTAL_QS}`;
+                const prefix = (window.i18n ? i18n.t('questionOf', { n: currentIndex + 1, total: TOTAL_QS }) : `Саволи ${currentIndex + 1} / ${TOTAL_QS}`);
+                qCounterEl.textContent = prefix;
                 qTextEl.textContent = q.question;
 
                 let htmlStr = '';
@@ -423,8 +302,7 @@
 
                 document.querySelectorAll('input[name="qOption"]').forEach(radio => {
                     radio.addEventListener('change', function (e) {
-                        const selectedVal = parseInt(e.target.value);
-                        userAnswers[currentIndex] = selectedVal;
+                        userAnswers[currentIndex] = parseInt(e.target.value);
                     });
                 });
 
@@ -443,12 +321,10 @@
 
             function moveToNextQuestion() {
                 stopTimer();
-
                 if (currentIndex === TOTAL_QS - 1) {
                     showResults();
                     return;
                 }
-
                 currentIndex++;
                 renderQuestion();
             }
@@ -458,8 +334,7 @@
                 questionArea.classList.add('hidden');
                 nextBtn.classList.add('hidden');
                 resultBlock.classList.remove('hidden');
-                const finalScore = calculateScore();
-                scoreSpan.textContent = finalScore;
+                scoreSpan.textContent = calculateScore();
             }
 
             function restartTest() {
@@ -472,24 +347,39 @@
                 renderQuestion();
             }
 
-            function onNextClick() {
-                moveToNextQuestion();
-            }
+            nextBtn.addEventListener('click', moveToNextQuestion);
+            restartBtn.addEventListener('click', restartTest);
 
-            // Инисиализасия
+            document.addEventListener('languageChanged', () => {
+                questions = getQuestions();
+                TOTAL_QS = questions.length;
+                userAnswers = new Array(TOTAL_QS).fill(null);
+                currentIndex = 0;
+                if (!resultBlock.classList.contains('hidden')) {
+                    restartTest();
+                } else {
+                    renderQuestion();
+                }
+            });
+
             function initTest() {
                 resultBlock.classList.add('hidden');
                 questionArea.classList.remove('hidden');
                 nextBtn.classList.remove('hidden');
-                restartTest(); // аз саволи 1сар мекунад
+                setTimeout(() => {
+                    questions = getQuestions();
+                    TOTAL_QS = questions.length || 25;
+                    userAnswers = new Array(TOTAL_QS).fill(null);
+                    renderQuestion();
+                }, 50);
             }
-
-            nextBtn.addEventListener('click', onNextClick);
-            restartBtn.addEventListener('click', restartTest);
 
             initTest();
         })();
     </script>
+
+<script src="js/i18n.js"></script>
+
 </body>
 
 </html>
