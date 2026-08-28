@@ -1,1 +1,85 @@
-PLACEHOLDER_PHOTO
+<!DOCTYPE html>
+<html lang="tj">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="siteTitle">SCANNERI ELEMENTHO</title>
+<style>
+:root{--bg:#0c1222;--gold:#c9a227;--gold-l:#e8d48b;--teal:#2dd4bf;--text:#f1f5f9;--muted:#94a3b8;--surf:rgba(20,28,46,.9);--border:rgba(201,162,39,.2);--cell:42px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:12px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px}
+.nav a{color:var(--gold-l);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-size:.85rem;font-weight:600}
+.nav a:hover,.nav a.active{background:rgba(201,162,39,.12)}
+.wrap{max-width:980px;margin:0 auto}
+h1{text-align:center;font-size:1.6rem;color:var(--gold-l);margin:8px 0 4px}
+.sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+.search{display:flex;gap:8px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+.search input{flex:1;min-width:180px;max-width:320px;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.35);color:var(--text)}
+.search input:focus{outline:none;border-color:var(--gold)}
+.search button{padding:12px 20px;border:none;border-radius:10px;background:linear-gradient(135deg,#c9a227,#a8841a);color:#0c1222;font-weight:700;cursor:pointer}
+.sel{display:none;background:var(--surf);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:12px;padding:14px 20px;margin-bottom:16px;text-align:center}
+.sel .sym{font-size:2rem;font-weight:800;color:var(--gold)}
+.table-box{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:16px;overflow-x:auto;margin-bottom:16px}
+.table-title{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em}
+#pt{display:grid;grid-template-columns:repeat(18,var(--cell));gap:3px;justify-content:center;min-width:max-content;margin:0 auto}
+.cell{background:rgba(30,41,59,.9);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.65rem;cursor:pointer;border:1px solid transparent;position:relative;height:var(--cell)}
+.cell:hover{transform:scale(1.12);border-color:var(--gold);z-index:5;box-shadow:0 0 12px rgba(201,162,39,.3)}
+.cell.active{background:rgba(201,162,39,.2);border-color:var(--gold)}
+.cell .n{position:absolute;top:2px;left:3px;font-size:.5rem;opacity:.5}
+.cell .s{color:var(--teal);font-weight:800;font-size:.95rem;margin-top:4px}
+.detail{display:none;background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:8px}
+.detail .big{font-size:2.8rem;font-weight:900;color:var(--gold)}
+.detail .name{font-size:1.4rem;font-weight:700;margin:8px 0 16px}
+.info-l{color:var(--gold);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px}
+.info-t{color:var(--muted);margin-bottom:14px;font-size:.95rem}
+@media(max-width:700px){:root{--cell:32px}.cell .s{font-size:.8rem}}
+</style>
+</head>
+<body>
+<div class="nav">
+<a href="index.html">Асосӣ</a>
+<a href="photo.html" class="active">Ҷадвали Менделеев</a>
+<a href="photo2.html">Маълумот</a>
+<a href="photo3.html">Калькулятор</a>
+<a href="photo4.html">Тестҳо</a>
+</div>
+<div class="wrap">
+<h1 data-i18n="siteTitle">SCANNERI ELEMENTHO</h1>
+<p class="sub" data-i18n="subtitle">Ҷадвали даврии элементҳо — 118 элемент</p>
+<div class="search">
+<input id="q" placeholder="Номи элемент ё рамз..." data-i18n-placeholder="searchPlaceholder">
+<button onclick="doSearch()" data-i18n="searchBtn">ҶУСТАН</button>
+</div>
+<div class="sel" id="sel"><span class="sym" id="selSym">H</span> <div><b id="selName">Ҳидроген</b><br><span id="selMeta" style="color:var(--muted);font-size:.85rem">#1</span></div></div>
+<div class="table-box">
+<div class="table-title" data-i18n="tableTitle">ҶАДВАЛИ ДАВРИИ Д.И. МЕНДЕЛЕЕВ</div>
+<div id="pt"></div>
+</div>
+<div class="detail" id="detail">
+<span class="big" id="dSym">H</span>
+<div class="name" id="dName">Ҳидроген (H)</div>
+<span class="info-l" data-i18n="labelUse">ИСТИФОДАБАРИИ АСОСӢ</span>
+<div class="info-t" id="dUse">—</div>
+<span class="info-l" data-i18n="labelFact">ХОСИЯТҲОИ ҶОЛИБ</span>
+<div class="info-t" id="dFact">—</div>
+<span class="info-l" data-i18n="labelDanger">ХАТАРНОКӢ</span>
+<div class="info-t" id="dDanger">—</div>
+<span class="info-l" data-i18n="labelWeight">ВАЗНИ АТОМИ</span>
+<div class="info-t" id="dWeight">—</div>
+</div>
+</div>
+<script>
+const SYM=[null,"H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"];
+const DB={h:{name:"Ҳидроген (H)",n:1,w:"1.008",use:"Сӯзишвории мушакҳо.",fact:"Аз ҳама паҳншуда дар Коинот.",danger:"Тарканда."},he:{name:"Ҳелий (He)",n:2,w:"4.003",use:"Пуфакҳо.",fact:"Дувумин сабуктарин.",danger:"Бехатар."},li:{name:"Литий (Li)",n:3,w:"6.94",use:"Батареяҳо.",fact:"Дар об шино мекунад.",danger:"Бо об метаркад."},c:{name:"Карбон (C)",n:6,w:"12.011",use:"Алмаз, графит, ҳаёт.",fact:"Алмаз ва ангишт — як элемент.",danger:"Бехатар."},n:{name:"Азот (N)",n:7,w:"14.007",use:"Нуриҳо.",fact:"78% ҳаво.",danger:"Моеъ — хеле сард."},o:{name:"Оксиген (O)",n:8,w:"15.999",use:"Нафаскашӣ.",fact:"Моеъ — кабуд.",danger:"Оташгиранда."},na:{name:"Натрий (Na)",n:11,w:"22.99",use:"Намак.",fact:"Мулоим.",danger:"Бо об метаркад."},fe:{name:"Оҳан (Fe)",n:26,w:"55.845",use:"Сохтмон, хун.",fact:"Миррих сурх аз оҳан.",danger:"Бехатар."},cu:{name:"Мис (Cu)",n:29,w:"63.546",use:"Симҳо.",fact:"Якумин металли истифодашуда.",danger:"Бехатар."},au:{name:"Тилло (Au)",n:79,w:"196.97",use:"Зевар, электроника.",fact:"Занг намезанад.",danger:"Бехатар."}};
+const NAMES={"ҳидроген":"h","гелий":"he","ҳелий":"he","литий":"li","карбон":"c","азот":"n","оксиген":"o","натрий":"na","оҳан":"fe","мис":"cu","тилло":"au"};
+const pt=document.getElementById('pt');
+for(let i=1;i<=118;i++){const c=document.createElement('div');c.className='cell';c.dataset.n=i;c.innerHTML='<span class="n">'+i+'</span><span class="s">'+(SYM[i]||'?')+'</span>';c.onclick=()=>sel(i);pt.appendChild(c);}
+function sel(num){const s=(SYM[num]||'?').toLowerCase();let d=DB[s];if(!d){for(const k in DB){if(DB[k].n===num){d=DB[k];break;}}}if(!d)d={name:(SYM[num]||'Элемент')+' (#'+num+')',n:num,w:'?',use:'Маълумот нест.',fact:'—',danger:'—'};document.getElementById('sel').style.display='block';document.getElementById('selSym').textContent=SYM[num]||'?';document.getElementById('selName').textContent=d.name.split('(')[0].trim();document.getElementById('selMeta').textContent='#'+d.n+' · M = '+d.w;document.getElementById('dSym').textContent=SYM[num]||'?';document.getElementById('dName').textContent=d.name;document.getElementById('dUse').textContent=d.use;document.getElementById('dFact').textContent=d.fact;document.getElementById('dDanger').textContent=d.danger;document.getElementById('dWeight').textContent=d.w;document.getElementById('detail').style.display='block';document.querySelectorAll('.cell').forEach(x=>x.classList.remove('active'));const ac=document.querySelector('.cell[data-n="'+num+'"]');if(ac)ac.classList.add('active');}
+function doSearch(){const v=document.getElementById('q').value.trim().toLowerCase();if(!v)return;if(!isNaN(v)){const n=+v;if(n>=1&&n<=118){sel(n);document.getElementById('q').value='';return;}}const u=v.toUpperCase();const idx=SYM.indexOf(u);if(idx>0){sel(idx);document.getElementById('q').value='';return;}const sym=NAMES[v]||v;if(DB[sym]){sel(DB[sym].n);document.getElementById('q').value='';return;}alert('Элемент ёфт нашуд');}
+document.getElementById('q').addEventListener('keypress',e=>{if(e.key==='Enter')doSearch();});
+setTimeout(()=>sel(1),200);
+</script>
+<script src="js/i18n.js"></script>
+</body>
+</html>
