@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="tj">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Панели идоракунӣ · SCANNERI ELEMENTHO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c1222;
+  --bg-elevated: #141c2e;
+  --surface: rgba(20, 28, 46, 0.88);
+  --border: rgba(201, 162, 39, 0.22);
+  --border-soft: rgba(148, 163, 184, 0.12);
+  --gold: #c9a227;
+  --gold-light: #e8d48b;
+  --teal: #2dd4bf;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --danger: #f87171;
+  --ok: #34d399;
+  --font: 'Inter', system-ui, sans-serif;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sidebar-w: 240px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+.bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201, 162, 39, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(45, 212, 191, 0.04) 0%, transparent 50%),
+    var(--bg);
+}
+.bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(201, 162, 39, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 162, 39, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black, transparent);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black, transparent);
+}
+#loginScreen {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.login-card {
+  width: 100%; max-width: 400px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 28px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.35);
+}
+.login-emblem {
+  width: 56px; height: 56px; margin: 0 auto 18px;
+  border: 1.5px solid var(--border); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  background: linear-gradient(160deg, rgba(201,162,39,0.15), rgba(20,28,46,0.9));
+  color: var(--gold-light);
+}
+.login-card h1 {
+  font-family: var(--serif);
+  font-size: 1.65rem; font-weight: 600;
+  text-align: center; margin-bottom: 6px;
+}
+.login-card .sub {
+  text-align: center; color: var(--text-muted);
+  font-size: 0.88rem; margin-bottom: 28px;
+}
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 0.78rem; font-weight: 600;
+  color: var(--gold); letter-spacing: 0.04em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.field input {
+  width: 100%; padding: 12px 14px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px; color: var(--text);
+  font-size: 0.95rem; font-family: var(--font);
+  transition: border-color 0.2s;
+}
+.field input:focus { outline: none; border-color: var(--gold); }
+.btn-primary {
+  width: 100%; padding: 13px;
+  background: linear-gradient(135deg, #c9a227, #a8841a);
+  color: #0c1222; border: none; border-radius: 8px;
+  font-weight: 700; font-size: 0.95rem; cursor: pointer;
+  font-family: var(--font); margin-top: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 16px rgba(201,162,39,0.25);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(201,162,39,0.35);
+}
+.btn-ghost {
+  background: transparent; border: 1px solid var(--border-soft);
+  color: var(--text-muted); padding: 8px 14px; border-radius: 8px;
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font); transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--border); color: var(--text); }
+.btn-danger {
+  background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.35);
+  color: var(--danger); padding: 8px 14px; border-radius: 8px;
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  font-family: var(--font);
+}
+.btn-danger:hover { background: rgba(248,113,113,0.2); }
+.login-error {
+  display: none; margin-top: 14px; padding: 10px 12px;
+  background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3);
+  border-radius: 8px; color: var(--danger); font-size: 0.88rem; text-align: center;
+}
+.login-error.show { display: block; }
+#panelScreen { display: none; position: relative; z-index: 1; min-height: 100vh; }
+.layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: rgba(12, 18, 34, 0.95);
+  border-right: 1px solid var(--border-soft);
+  backdrop-filter: blur(12px);
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh;
+}
+.sidebar-head {
+  padding: 20px 18px 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.sidebar-head .brand {
+  font-family: var(--serif); font-size: 1.15rem; font-weight: 600;
+  color: var(--gold-light);
+}
+.sidebar-head .tag {
+  font-size: 0.7rem; color: var(--text-dim); margin-top: 4px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.nav-items { padding: 12px 10px; flex: 1; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 11px 12px; margin-bottom: 4px;
+  background: transparent; border: none; border-radius: 8px;
+  color: var(--text-muted); font-size: 0.9rem; font-weight: 500;
+  cursor: pointer; font-family: var(--font); text-align: left;
+  transition: all 0.2s;
+}
+.nav-item:hover { background: rgba(201,162,39,0.08); color: var(--text); }
+.nav-item.active {
+  background: rgba(201,162,39,0.14);
+  color: var(--gold-light);
+  border: 1px solid var(--border);
+}
+.nav-item .ico { font-size: 1.05rem; width: 22px; text-align: center; }
+.sidebar-foot {
+  padding: 14px; border-top: 1px solid var(--border-soft);
+}
+.main {
+  flex: 1; min-width: 0;
+  padding: 24px 28px 40px;
+}
+.main-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.main-top h2 {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 600;
+}
+.main-top .hint { color: var(--text-dim); font-size: 0.85rem; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px; margin-bottom: 22px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px; padding: 18px 16px;
+}
+.stat-card .label {
+  font-size: 0.75rem; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.stat-card .value {
+  font-size: 1.7rem; font-weight: 700; color: var(--gold-light);
+}
+.stat-card .delta { font-size: 0.8rem; color: var(--teal); margin-top: 4px; }
+.panel-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px; padding: 20px; margin-bottom: 16px;
+}
+.panel-card h3 {
+  font-size: 1rem; font-weight: 600; color: var(--gold);
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.chart-bars {
+  display: flex; align-items: flex-end; gap: 10px;
+  height: 140px; padding-top: 8px;
+}
+.chart-bars .bar-wrap {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 6px; height: 100%;
+  justify-content: flex-end;
+}
+.chart-bars .bar {
+  width: 100%; max-width: 48px;
+  background: linear-gradient(180deg, var(--gold), rgba(201,162,39,0.35));
+  border-radius: 6px 6px 2px 2px;
+  min-height: 4px; transition: height 0.4s ease;
+}
+.chart-bars .bar-label {
+  font-size: 0.7rem; color: var(--text-dim); text-align: center;
+}
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border-soft); }
+th { color: var(--text-dim); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+td { color: var(--text-muted); }
+.badge-on {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 600;
+  background: rgba(52,211,153,0.15); color: var(--ok);
+  border: 1px solid rgba(52,211,153,0.3);
+}
+.badge-off {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 0.75rem; font-weight: 600;
+  background: rgba(248,113,113,0.12); color: var(--danger);
+  border: 1px solid rgba(248,113,113,0.3);
+}
+.toggle {
+  position: relative; width: 44px; height: 24px;
+  background: rgba(100,116,139,0.4); border-radius: 12px;
+  cursor: pointer; border: none; transition: background 0.2s;
+}
+.toggle.on { background: rgba(201,162,39,0.55); }
+.toggle::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; transition: transform 0.2s;
+}
+.toggle.on::after { transform: translateX(20px); }
+.form-row { margin-bottom: 14px; }
+.form-row label {
+  display: block; font-size: 0.8rem; font-weight: 600;
+  color: var(--text-muted); margin-bottom: 6px;
+}
+.form-row input, .form-row textarea {
+  width: 100%; padding: 11px 12px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px; color: var(--text);
+  font-size: 0.9rem; font-family: var(--font);
+}
+.form-row textarea { min-height: 100px; resize: vertical; }
+.form-row input:focus, .form-row textarea:focus {
+  outline: none; border-color: var(--gold);
+}
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 100;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--gold-light); padding: 12px 18px; border-radius: 10px;
+  font-size: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  opacity: 0; transform: translateY(12px); transition: all 0.3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.mobile-bar {
+  display: none; position: sticky; top: 0; z-index: 20;
+  background: rgba(12,18,34,0.95); border-bottom: 1px solid var(--border-soft);
+  padding: 12px 16px; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(12px);
+}
+.mobile-bar button {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--gold-light); padding: 8px 12px; border-radius: 8px;
+  font-size: 0.85rem; cursor: pointer; font-family: var(--font);
+}
+@media (max-width: 800px) {
+  .sidebar {
+    position: fixed; left: 0; top: 0; z-index: 30;
+    transform: translateX(-100%); transition: transform 0.25s ease;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .mobile-bar { display: flex; }
+  .main { padding: 16px; }
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0; z-index: 25;
+    background: rgba(0,0,0,0.5);
+  }
+  .sidebar-overlay.show { display: block; }
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-emblem">⚛</div>
+    <h1>Панели идоракунӣ</h1>
+    <p class="sub">SCANNERI ELEMENTHO · Дастрасии махфӣ</p>
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <label for="loginId">Рақам (логин)</label>
+        <input type="text" id="loginId" inputmode="numeric" placeholder="Рақами воридшавӣ" required>
+      </div>
+      <div class="field">
+        <label for="loginPw">Рамз</label>
+        <input type="password" id="loginPw" placeholder="Рамзи махфӣ" required>
+      </div>
+      <button type="submit" class="btn-primary">Ворид шудан</button>
+      <div class="login-error" id="loginError">Рақам ё рамз нодуруст аст. Дубора кӯшиш кунед.</div>
+    </form>
+  </div>
+</div>
+<div id="panelScreen">
+  <div class="mobile-bar">
+    <button type="button" id="menuBtn">☰ Меню</button>
+    <span style="color:var(--gold-light);font-weight:600;font-size:0.9rem;">Админ</span>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <div class="brand">SCANNERI</div>
+        <div class="tag">Панели идоракунӣ</div>
+      </div>
+      <nav class="nav-items">
+        <button type="button" class="nav-item active" data-tab="traffic"><span class="ico">📊</span> Трафик</button>
+        <button type="button" class="nav-item" data-tab="web"><span class="ico">🌐</span> Идораи веб</button>
+        <button type="button" class="nav-item" data-tab="announce"><span class="ico">📢</span> Эълонҳо</button>
+        <button type="button" class="nav-item" data-tab="settings"><span class="ico">⚙️</span> Танзимот</button>
+      </nav>
+      <div class="sidebar-foot">
+        <button type="button" class="btn-danger" id="logoutBtn" style="width:100%">Баромад</button>
+      </div>
+    </aside>
+    <main class="main">
+      <section class="tab-pane active" id="tab-traffic">
+        <div class="main-top">
+          <div>
+            <h2>Омори трафик</h2>
+            <p class="hint">Маълумоти намоишӣ (демо) · навсозӣ локалӣ</p>
+          </div>
+          <button type="button" class="btn-ghost" id="resetStats">Барқарор кардани омор</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="label">Боздидҳои умумӣ</div><div class="value" id="stTotal">—</div><div class="delta" id="stTotalDelta">+0%</div></div>
+          <div class="stat-card"><div class="label">Имрӯз</div><div class="value" id="stToday">—</div><div class="delta">боздид</div></div>
+          <div class="stat-card"><div class="label">Ҳафтаи ҷорӣ</div><div class="value" id="stWeek">—</div><div class="delta">7 рӯз</div></div>
+          <div class="stat-card"><div class="label">Саҳифаҳои фаъол</div><div class="value" id="stPages">5</div><div class="delta">аз 5</div></div>
+        </div>
+        <div class="panel-card"><h3>Боздидҳо аз рӯи рӯзҳо (7 рӯз)</h3><div class="chart-bars" id="weekChart"></div></div>
+        <div class="panel-card"><h3>Саҳифаҳои машҳур</h3><div class="table-wrap"><table><thead><tr><th>Саҳифа</th><th>Боздид</th><th>Ҳисса</th></tr></thead><tbody id="popularBody"></tbody></table></div></div>
+      </section>
+      <section class="tab-pane" id="tab-web">
+        <div class="main-top"><div><h2>Идоракунии веб</h2><p class="hint">Фаъол / ғайрифаъол кардани саҳифаҳо</p></div></div>
+        <div class="panel-card"><h3>Саҳифаҳои лоиҳа</h3><div class="table-wrap"><table><thead><tr><th>Саҳифа</th><th>Ном</th><th>Ҳолат</th><th>Амал</th></tr></thead><tbody id="pagesBody"></tbody></table></div>
+          <p style="margin-top:12px;font-size:0.82rem;color:var(--text-dim);">Ғайрифаъол кардан — истифодабарандагон паёми «саҳифа муваққатан дастнорас»-ро мебинанд.</p>
+        </div>
+      </section>
+      <section class="tab-pane" id="tab-announce">
+        <div class="main-top"><div><h2>Эълонҳо</h2><p class="hint">Матн дар саҳифаҳои асосӣ нишон дода мешавад</p></div></div>
+        <div class="panel-card"><h3>Эълони ҷорӣ</h3>
+          <div class="form-row"><label for="announceText">Матни эълон</label><textarea id="announceText" placeholder="Масалан: Олимпиада рӯзи 15 сентябр оғоз мешавад..."></textarea></div>
+          <div class="form-row"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><button type="button" class="toggle" id="announceToggle" aria-label="Фаъол"></button><span>Эълонро нишон додан</span></label></div>
+          <div class="actions"><button type="button" class="btn-primary" id="saveAnnounce" style="width:auto;padding:11px 22px;">Сабт кардан</button><button type="button" class="btn-ghost" id="clearAnnounce">Пок кардан</button></div>
+        </div>
+      </section>
+      <section class="tab-pane" id="tab-settings">
+        <div class="main-top"><div><h2>Танзимоти умумӣ</h2><p class="hint">Унвон, тавсиф ва ҳолати нигоҳдорӣ</p></div></div>
+        <div class="panel-card"><h3>Сайт</h3>
+          <div class="form-row"><label for="setTitle">Унвони сайт</label><input type="text" id="setTitle" placeholder="SCANNERI ELEMENTHO"></div>
+          <div class="form-row"><label for="setDesc">Тавсифи сайт</label><textarea id="setDesc" placeholder="Платформаи илмӣ-таълимӣ..."></textarea></div>
+          <div class="form-row"><label style="display:flex;align-items:center;gap:10px;cursor:pointer;"><button type="button" class="toggle" id="maintToggle" aria-label="Нигоҳдорӣ"></button><span>Режими нигоҳдорӣ (тамоми сайт)</span></label></div>
+          <div class="actions"><button type="button" class="btn-primary" id="saveSettings" style="width:auto;padding:11px 22px;">Сабт кардан</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function () {
+  'use strict';
+  function _x(a, k) {
+    var o = '';
+    for (var i = 0; i < a.length; i++) o += String.fromCharCode(a.charCodeAt(i) ^ k);
+    return o;
+  }
+  var _u = _x('777>>?32?', 7);
+  var _p = _x('5651755<', 5);
+  var _cu = [48,48,48,57,57,56,52,53,56].map(function (n) { return String.fromCharCode(n); }).join('');
+  var _cp = [48,51,48,52,50,48,48,57].map(function (n) { return String.fromCharCode(n); }).join('');
+  var KEYS = { session: 'se_admin_session', stats: 'se_admin_stats', pages: 'se_pages_status', announce: 'se_announce', settings: 'se_site_settings' };
+  var PAGE_META = [
+    { id: 'index.html', name: 'Асосӣ (index)' },
+    { id: 'photo.html', name: 'Ҷадвали Менделеев' },
+    { id: 'photo2.html', name: 'Маълумот' },
+    { id: 'photo3.html', name: 'Калькулятор' },
+    { id: 'photo4.html', name: 'Тестҳо' }
+  ];
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    el.textContent = msg; el.classList.add('show');
+    setTimeout(function () { el.classList.remove('show'); }, 2400);
+  }
+  function loadJSON(key, fallback) {
+    try { var raw = localStorage.getItem(key); if (!raw) return fallback; return JSON.parse(raw); }
+    catch (e) { return fallback; }
+  }
+  function saveJSON(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+  function defaultStats() {
+    var days = [];
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date(); d.setDate(d.getDate() - i);
+      days.push({ label: d.toLocaleDateString('tg-TJ', { weekday: 'short' }), value: 40 + Math.floor(Math.random() * 90) });
+    }
+    var popular = [
+      { page: 'index.html', views: 1240 }, { page: 'photo.html', views: 980 },
+      { page: 'photo4.html', views: 720 }, { page: 'photo3.html', views: 510 }, { page: 'photo2.html', views: 430 }
+    ];
+    var weekSum = days.reduce(function (s, x) { return s + x.value; }, 0);
+    return { total: 3880 + Math.floor(Math.random() * 200), today: days[6].value, week: weekSum, days: days, popular: popular };
+  }
+  function getStats() {
+    var s = loadJSON(KEYS.stats, null);
+    if (!s || !s.days) { s = defaultStats(); saveJSON(KEYS.stats, s); }
+    return s;
+  }
+  function getPages() {
+    var p = loadJSON(KEYS.pages, null);
+    if (!p) { p = {}; PAGE_META.forEach(function (m) { p[m.id] = true; }); saveJSON(KEYS.pages, p); }
+    return p;
+  }
+  function isAuthed() {
+    try {
+      var s = localStorage.getItem(KEYS.session); if (!s) return false;
+      var data = JSON.parse(s);
+      return data && data.ok === true && data.t && (Date.now() - data.t < 1000 * 60 * 60 * 12);
+    } catch (e) { return false; }
+  }
+  function setSession() { localStorage.setItem(KEYS.session, JSON.stringify({ ok: true, t: Date.now() })); }
+  function clearSession() { localStorage.removeItem(KEYS.session); }
+  function showLogin() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('panelScreen').style.display = 'none';
+  }
+  function showPanel() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('panelScreen').style.display = 'block';
+    renderTraffic(); renderPages(); renderAnnounce(); renderSettings();
+  }
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = (document.getElementById('loginId').value || '').trim();
+    var pw = (document.getElementById('loginPw').value || '').trim();
+    var err = document.getElementById('loginError');
+    var ok = (id === _u || id === _cu) && (pw === _p || pw === _cp);
+    if (!ok) { err.classList.add('show'); return; }
+    err.classList.remove('show'); setSession(); showPanel();
+  });
+  document.getElementById('logoutBtn').addEventListener('click', function () {
+    clearSession(); showLogin();
+    document.getElementById('loginId').value = '';
+    document.getElementById('loginPw').value = '';
+  });
+  document.querySelectorAll('.nav-item').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.nav-item').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-pane').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.getAttribute('data-tab')).classList.add('active');
+      closeMobileNav();
+    });
+  });
+  function closeMobileNav() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('show');
+  }
+  document.getElementById('menuBtn').addEventListener('click', function () {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('show');
+  });
+  document.getElementById('sidebarOverlay').addEventListener('click', closeMobileNav);
+  function renderTraffic() {
+    var s = getStats();
+    document.getElementById('stTotal').textContent = s.total.toLocaleString('tg-TJ');
+    document.getElementById('stToday').textContent = s.today;
+    document.getElementById('stWeek').textContent = s.week;
+    var active = 0, pages = getPages();
+    PAGE_META.forEach(function (m) { if (pages[m.id] !== false) active++; });
+    document.getElementById('stPages').textContent = active;
+    document.getElementById('stTotalDelta').textContent = '+12% нисбат ба моҳи гузашта';
+    var max = Math.max.apply(null, s.days.map(function (d) { return d.value; })) || 1;
+    var chart = document.getElementById('weekChart'); chart.innerHTML = '';
+    s.days.forEach(function (d) {
+      var wrap = document.createElement('div'); wrap.className = 'bar-wrap';
+      var bar = document.createElement('div'); bar.className = 'bar';
+      bar.style.height = Math.max(6, (d.value / max) * 100) + '%'; bar.title = d.value + ' боздид';
+      var lab = document.createElement('div'); lab.className = 'bar-label'; lab.textContent = d.label;
+      wrap.appendChild(bar); wrap.appendChild(lab); chart.appendChild(wrap);
+    });
+    var tbody = document.getElementById('popularBody'); tbody.innerHTML = '';
+    var sum = s.popular.reduce(function (a, b) { return a + b.views; }, 0) || 1;
+    s.popular.forEach(function (row) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + row.page + '</td><td>' + row.views + '</td><td>' + Math.round((row.views / sum) * 100) + '%</td>';
+      tbody.appendChild(tr);
+    });
+  }
+  document.getElementById('resetStats').addEventListener('click', function () {
+    saveJSON(KEYS.stats, defaultStats()); renderTraffic(); toast('Омор барқарор шуд');
+  });
+  function renderPages() {
+    var pages = getPages();
+    var tbody = document.getElementById('pagesBody'); tbody.innerHTML = '';
+    PAGE_META.forEach(function (m) {
+      var on = pages[m.id] !== false;
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td><code style="color:var(--teal)">' + m.id + '</code></td><td>' + m.name + '</td><td><span class="' + (on ? 'badge-on' : 'badge-off') + '">' + (on ? 'Фаъол' : 'Ғайрифаъол') + '</span></td><td></td>';
+      var btn = document.createElement('button'); btn.type = 'button';
+      btn.className = 'toggle' + (on ? ' on' : '');
+      btn.addEventListener('click', function () {
+        pages[m.id] = !on; saveJSON(KEYS.pages, pages); renderPages(); renderTraffic();
+        toast(m.name + (pages[m.id] ? ' — фаъол' : ' — ғайрифаъол'));
+      });
+      tr.cells[3].appendChild(btn); tbody.appendChild(tr);
+    });
+  }
+  function renderAnnounce() {
+    var a = loadJSON(KEYS.announce, { text: '', enabled: false });
+    document.getElementById('announceText').value = a.text || '';
+    var t = document.getElementById('announceToggle');
+    if (a.enabled) t.classList.add('on'); else t.classList.remove('on');
+  }
+  document.getElementById('announceToggle').addEventListener('click', function () { this.classList.toggle('on'); });
+  document.getElementById('saveAnnounce').addEventListener('click', function () {
+    var text = document.getElementById('announceText').value.trim();
+    var enabled = document.getElementById('announceToggle').classList.contains('on');
+    saveJSON(KEYS.announce, { text: text, enabled: enabled && !!text });
+    toast('Эълон сабт шуд');
+  });
+  document.getElementById('clearAnnounce').addEventListener('click', function () {
+    document.getElementById('announceText').value = '';
+    document.getElementById('announceToggle').classList.remove('on');
+    saveJSON(KEYS.announce, { text: '', enabled: false });
+    toast('Эълон пок шуд');
+  });
+  function renderSettings() {
+    var s = loadJSON(KEYS.settings, { title: 'SCANNERI ELEMENTHO', desc: 'Платформаи илмӣ-таълимӣ барои Олимпиадаи ҷумҳуриявӣ аз химия.', maintenance: false });
+    document.getElementById('setTitle').value = s.title || '';
+    document.getElementById('setDesc').value = s.desc || '';
+    var mt = document.getElementById('maintToggle');
+    if (s.maintenance) mt.classList.add('on'); else mt.classList.remove('on');
+  }
+  document.getElementById('maintToggle').addEventListener('click', function () { this.classList.toggle('on'); });
+  document.getElementById('saveSettings').addEventListener('click', function () {
+    saveJSON(KEYS.settings, {
+      title: document.getElementById('setTitle').value.trim() || 'SCANNERI ELEMENTHO',
+      desc: document.getElementById('setDesc').value.trim(),
+      maintenance: document.getElementById('maintToggle').classList.contains('on')
+    });
+    toast('Танзимот сабт шуд');
+  });
+  if (isAuthed()) showPanel(); else showLogin();
+})();
+</script>
+</body>
+</html>
