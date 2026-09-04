@@ -1,17 +1,10 @@
 /**
- * SCANNERI ELEMENTHO — runtime (эълонҳо, ҳолати саҳифа, танзимот)
- * Аз Admin Panel тавассути localStorage идора мешавад.
- * Ҳеҷ пайванд ба admin.html надорад.
+ * SCANNERI ELEMENTHO — runtime (announcements, page status, settings)
+ * Compatible with Admin Panel localStorage keys.
  */
 (function () {
   'use strict';
-  if (location.pathname.split('/').pop() === 'admin.html') return;
-
-  var KEYS = {
-    pages: 'se_pages_status',
-    announce: 'se_announce',
-    settings: 'se_site_settings'
-  };
+  if ((location.pathname.split('/').pop() || '') === 'admin.html') return;
 
   function loadJSON(key, fallback) {
     try {
@@ -22,46 +15,59 @@
   }
 
   var page = location.pathname.split('/').pop() || 'index.html';
-  if (!page || page === '') page = 'index.html';
+  if (!page) page = 'index.html';
 
-  var settings = loadJSON(KEYS.settings, null);
-  var pages = loadJSON(KEYS.pages, null);
-  var announce = loadJSON(KEYS.announce, null);
+  var settings = loadJSON('se_site_settings', null) || loadJSON('siteSettings', null) || {};
+  if (localStorage.getItem('maintenanceMode') === '1') settings.maintenance = true;
 
-  if (settings && settings.title) {
-    document.title = settings.title;
+  var pages = loadJSON('se_pages_status', null) || loadJSON('pageStatus', null);
+
+  var announce = loadJSON('se_announce', null);
+  if (!announce) {
+    var list = loadJSON('announcements', []);
+    if (list && list.length) {
+      var last = list[list.length - 1];
+      announce = { text: typeof last === 'string' ? last : (last.text || ''), enabled: true };
+    }
   }
-  if (settings && settings.desc) {
+
+  if (settings.title) document.title = settings.title;
+  if (settings.desc) {
     var meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', settings.desc);
   }
 
-  if (settings && settings.maintenance) {
+  var lang = (localStorage.getItem('lang') || localStorage.getItem('se_admin_lang') || 'tj');
+  var msgMaint = lang === 'ru'
+    ? { t: 'Сайт на обслуживании', p: 'Пожалуйста, зайдите позже. Ведутся технические работы.' }
+    : { t: 'Сайт дар ҳолати нигоҳдорӣ', p: 'Лутфан дертар бозгашт кунед. Корҳои техникӣ идома доранд.' };
+  var msgOff = lang === 'ru'
+    ? { t: 'Страница временно недоступна', p: 'Этот раздел сейчас отключён.', a: '← На главную' }
+    : { t: 'Саҳифа муваққатан дастнорас аст', p: 'Ин қисмат ҳоло фаъол нест. Ба саҳифаи асосӣ баргардед.', a: '← Ба асосӣ' };
+
+  if (settings.maintenance) {
     document.documentElement.innerHTML =
       '<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
-      '<title>Нигоҳдорӣ</title>' +
+      '<title>' + msgMaint.t + '</title>' +
       '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;' +
       'background:#0c1222;color:#f1f5f9;font-family:system-ui,sans-serif;padding:24px;text-align:center}' +
       '.box{max-width:420px;border:1px solid rgba(201,162,39,.25);border-radius:14px;padding:32px 24px;' +
       'background:rgba(20,28,46,.9)}h1{color:#e8d48b;font-size:1.4rem;margin:0 0 12px}' +
       'p{color:#94a3b8;line-height:1.55;margin:0}</style></head><body><div class="box">' +
-      '<h1>⚛ Сайт дар ҳолати нигоҳдорӣ</h1>' +
-      '<p>Лутфан дертар бозгашт кунед. Корҳои техникӣ идома доранд.</p></div></body>';
+      '<h1>⚛ ' + msgMaint.t + '</h1><p>' + msgMaint.p + '</p></div></body>';
     return;
   }
 
   if (pages && pages[page] === false) {
     document.documentElement.innerHTML =
       '<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
-      '<title>Дастнорас</title>' +
+      '<title>' + msgOff.t + '</title>' +
       '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;' +
       'background:#0c1222;color:#f1f5f9;font-family:system-ui,sans-serif;padding:24px;text-align:center}' +
       '.box{max-width:420px;border:1px solid rgba(201,162,39,.25);border-radius:14px;padding:32px 24px;' +
       'background:rgba(20,28,46,.9)}h1{color:#e8d48b;font-size:1.4rem;margin:0 0 12px}' +
       'p{color:#94a3b8;line-height:1.55;margin:0 0 18px}a{color:#c9a227;font-weight:600}</style></head><body><div class="box">' +
-      '<h1>Саҳифа муваққатан дастнорас аст</h1>' +
-      '<p>Ин қисмат ҳоло фаъол нест. Ба саҳифаи асосӣ баргардед.</p>' +
-      '<a href="index.html">← Ба асосӣ</a></div></body>';
+      '<h1>' + msgOff.t + '</h1><p>' + msgOff.p + '</p><a href="index.html">' + msgOff.a + '</a></div></body>';
     return;
   }
 
@@ -75,18 +81,17 @@
     bar.textContent = announce.text;
     var close = document.createElement('button');
     close.type = 'button';
-    close.setAttribute('aria-label', 'Пӯшидан');
+    close.setAttribute('aria-label', 'Close');
     close.textContent = '×';
     close.style.cssText =
       'position:absolute;right:10px;top:50%;transform:translateY(-50%);background:transparent;' +
       'border:none;color:#e8d48b;font-size:1.25rem;cursor:pointer;line-height:1;padding:4px 8px';
     close.addEventListener('click', function () { bar.remove(); });
     bar.appendChild(close);
-    document.addEventListener('DOMContentLoaded', function () {
-      document.body.insertBefore(bar, document.body.firstChild);
-    });
-    if (document.readyState !== 'loading') {
-      document.body.insertBefore(bar, document.body.firstChild);
+    function inject() {
+      if (document.body) document.body.insertBefore(bar, document.body.firstChild);
     }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
+    else inject();
   }
 })();
