@@ -28,6 +28,7 @@
   var pages = loadJSON(KEYS.pages, null);
   var announce = loadJSON(KEYS.announce, null);
 
+  /* Title / description from admin settings */
   if (settings && settings.title) {
     document.title = settings.title;
   }
@@ -36,6 +37,7 @@
     if (meta) meta.setAttribute('content', settings.desc);
   }
 
+  /* Site-wide maintenance */
   if (settings && settings.maintenance) {
     document.documentElement.innerHTML =
       '<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
@@ -50,6 +52,7 @@
     return;
   }
 
+  /* Per-page disable */
   if (pages && pages[page] === false) {
     document.documentElement.innerHTML =
       '<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
@@ -65,6 +68,7 @@
     return;
   }
 
+  /* Announcement bar */
   if (announce && announce.enabled && announce.text) {
     var bar = document.createElement('div');
     bar.setAttribute('role', 'status');
