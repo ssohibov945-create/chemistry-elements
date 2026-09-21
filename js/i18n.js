@@ -149,7 +149,22 @@
       { q: 'Символ кальция?', o: ['Cl', 'Ca', 'Cs', 'Cr'], c: 1 },
       { q: 'Формула глюкозы?', o: ['C₆H₁₂O₆', 'C₁₂H₂₂O₁₁', 'CH₃OH', 'C₂H₅OH'], c: 0 },
       { q: 'Какой элемент в зубной пасте?', o: ['Cl', 'F', 'Br', 'I'], c: 1 },
-      { q: 'Символ азота?', o: ['A', 'Az', 'N', 'No'], c: 2 }
+      { q: 'Символ азота?', o: ['A', 'Az', 'N', 'No'], c: 2 },
+      { q: 'Валентность кислорода в большинстве соединений?', o: ['1', '2', '3', '4'], c: 1 },
+      { q: 'Какая реакция является синтезом?', o: ['2H₂O → 2H₂ + O₂', '2H₂ + O₂ → 2H₂O', 'Zn + 2HCl → ZnCl₂ + H₂', 'NaOH + HCl → NaCl + H₂O'], c: 1 },
+      { q: 'Молярная масса воды (H₂O) равна?', o: ['16', '18', '20', '22'], c: 1 },
+      { q: 'Какой элемент относится к галогенам?', o: ['O', 'S', 'Cl', 'N'], c: 2 },
+      { q: 'Формула серной кислоты?', o: ['HCl', 'HNO₃', 'H₂SO₄', 'H₂CO₃'], c: 2 },
+      { q: 'Какой газ образуется при горении метана?', o: ['O₂', 'H₂', 'CO₂', 'N₂'], c: 2 },
+      { q: 'Элемент №17?', o: ['Фтор', 'Хлор', 'Бром', 'Йод'], c: 1 },
+      { q: 'Какая реакция является реакцией обмена?', o: ['A + B → AB', 'AB → A + B', 'AB + C → AC + B', 'AB + CD → AD + CB'], c: 3 },
+      { q: 'Символ элемента «калий»?', o: ['P', 'K', 'Ca', 'Na'], c: 1 },
+      { q: 'Сколько атомов в молекуле CO₂?', o: ['2', '3', '4', '5'], c: 1 },
+      { q: 'Какое вещество является электролитом?', o: ['Сахар', 'Поваренная соль', 'Спирт', 'Бензин'], c: 1 },
+      { q: 'Формула оксида кальция?', o: ['CaO', 'CaO₂', 'Ca₂O', 'Ca(OH)₂'], c: 0 },
+      { q: 'Какой элемент входит в состав гемоглобина?', o: ['Cu', 'Fe', 'Zn', 'Mg'], c: 1 },
+      { q: 'pH нейтральной среды?', o: ['0', '5', '7', '14'], c: 2 },
+      { q: 'Кто открыл закон сохранения массы?', o: ['Менделеев', 'Лавуазье', 'Бойль', 'Кюри'], c: 1 }
     ],
     en: [
       { q: 'Chemical formula of water?', o: ['H₂O', 'CO₂', 'O₂', 'NaCl'], c: 0 },
@@ -176,7 +191,22 @@
       { q: 'Symbol of calcium?', o: ['Cl', 'Ca', 'Cs', 'Cr'], c: 1 },
       { q: 'Formula of glucose?', o: ['C₆H₁₂O₆', 'C₁₂H₂₂O₁₁', 'CH₃OH', 'C₂H₅OH'], c: 0 },
       { q: 'Which element is used in toothpaste?', o: ['Cl', 'F', 'Br', 'I'], c: 1 },
-      { q: 'Symbol of nitrogen?', o: ['A', 'Az', 'N', 'No'], c: 2 }
+      { q: 'Symbol of nitrogen?', o: ['A', 'Az', 'N', 'No'], c: 2 },
+      { q: 'Valency of oxygen in most compounds?', o: ['1', '2', '3', '4'], c: 1 },
+      { q: 'Which reaction is a synthesis?', o: ['2H₂O → 2H₂ + O₂', '2H₂ + O₂ → 2H₂O', 'Zn + 2HCl → ZnCl₂ + H₂', 'NaOH + HCl → NaCl + H₂O'], c: 1 },
+      { q: 'Molar mass of water (H₂O) is?', o: ['16', '18', '20', '22'], c: 1 },
+      { q: 'Which element is a halogen?', o: ['O', 'S', 'Cl', 'N'], c: 2 },
+      { q: 'Formula of sulfuric acid?', o: ['HCl', 'HNO₃', 'H₂SO₄', 'H₂CO₃'], c: 2 },
+      { q: 'Which gas is formed when methane burns?', o: ['O₂', 'H₂', 'CO₂', 'N₂'], c: 2 },
+      { q: 'Element number 17?', o: ['Fluorine', 'Chlorine', 'Bromine', 'Iodine'], c: 1 },
+      { q: 'Which is a double displacement reaction?', o: ['A + B → AB', 'AB → A + B', 'AB + C → AC + B', 'AB + CD → AD + CB'], c: 3 },
+      { q: 'Symbol of potassium?', o: ['P', 'K', 'Ca', 'Na'], c: 1 },
+      { q: 'How many atoms are in a CO₂ molecule?', o: ['2', '3', '4', '5'], c: 1 },
+      { q: 'Which substance is an electrolyte?', o: ['Sugar', 'Table salt', 'Alcohol', 'Gasoline'], c: 1 },
+      { q: 'Formula of calcium oxide?', o: ['CaO', 'CaO₂', 'Ca₂O', 'Ca(OH)₂'], c: 0 },
+      { q: 'Which element is in haemoglobin?', o: ['Cu', 'Fe', 'Zn', 'Mg'], c: 1 },
+      { q: 'pH of a neutral medium?', o: ['0', '5', '7', '14'], c: 2 },
+      { q: 'Who discovered the law of conservation of mass?', o: ['Mendeleev', 'Lavoisier', 'Boyle', 'Curie'], c: 1 }
     ]
   };
 
