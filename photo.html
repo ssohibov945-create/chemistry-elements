@@ -1,1 +1,148 @@
-<!DOCTYPE html><html lang="tj"><head><meta charset="UTF-8"><title>RESTORE</title></head><body>restore in progress</body></html>
+<!DOCTYPE html>
+<html lang="tj">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ҷадвали даврии Менделеев — 118 элемент бо сурат ва маълумот">
+<title data-i18n="siteTitle">SCANNERI ELEMENTHO</title>
+<link rel="stylesheet" href="css/photo.css">
+</head>
+<body>
+<div class="nav">
+<a href="index.html" data-i18n="navHome">Асосӣ</a>
+<a href="photo.html" class="active" data-i18n="btnTable">Ҷадвали Менделеев</a>
+<a href="photo2.html" data-i18n="btnInfo">Маълумот</a>
+<a href="photo3.html" data-i18n="btnCalc">Калькулятор</a>
+<a href="photo4.html" data-i18n="btnTest">Тестҳо</a>
+<div class="lang-bar" id="langBar">
+  <button type="button" class="lang-btn" data-lang="tg">🇹🇯 ТОҶ</button>
+  <button type="button" class="lang-btn" data-lang="ru">🇷🇺 РУС</button>
+  <button type="button" class="lang-btn" data-lang="en">🇬🇧 ENG</button>
+</div>
+</div>
+<div class="wrap">
+<h1 data-i18n="siteTitle">SCANNERI ELEMENTHO</h1>
+<p class="sub" data-i18n="subtitle">Ҷадвали даврии элементҳо — 118 элемент</p>
+<div class="search">
+<input id="q" type="search" placeholder="Номи элемент ё рамз..." data-i18n-placeholder="searchPlaceholder" autocomplete="off">
+<button type="button" onclick="doSearch()" data-i18n="searchBtn">ҶУСТАН</button>
+</div>
+<div class="sel" id="sel" style="display:none">
+<span class="sym" id="selSym">H</span>
+<div class="sel-info"><h2 id="selName">Ҳидроген</h2><span id="selMeta">#1 · M = 1.008</span></div>
+</div>
+<div class="table-box">
+<div class="table-title" data-i18n="tableTitle">ҶАДВАЛИ ДАВРИИ Д.И. МЕНДЕЛЕЕВ</div>
+<div id="pt"></div>
+</div>
+<div class="detail" id="detail">
+<div class="detail-grid">
+<div>
+<span class="big" id="dSym">H</span>
+<div class="name" id="dName">Ҳидроген (H)</div>
+<span class="info-l" data-i18n="labelUse">ИСТИФОДАБАРИИ АСОСӢ</span>
+<div class="info-t" id="dUse">—</div>
+<span class="info-l" data-i18n="labelFact">ХОСИЯТҲОИ ҶОЛИБ</span>
+<div class="info-t" id="dFact">—</div>
+<span class="info-l" data-i18n="labelDanger">ХАТАРНОКӢ</span>
+<div class="info-t" id="dDanger">—</div>
+<span class="info-l" data-i18n="labelWeight">ВАЗНИ АТОМИ</span>
+<div class="info-t" id="dWeight">—</div>
+</div>
+<div class="photo-col">
+<img id="elImg" class="el-img" alt="" style="display:none" onerror="this.style.display='none';document.getElementById('imgFb').style.display='flex'">
+<div id="imgFb" class="img-fallback" style="display:none" data-i18n="imgMissing">Сурат дастрас нест</div>
+<div class="photo-lbl" data-i18n="photoLabel">СУРАТИ ЭЛЕМЕНТ</div>
+</div>
+</div>
+</div>
+</div>
+<script src="js/const-sym.js"></script>
+<script src="js/const-img.js"></script>
+<script src="js/db-part0.js"></script>
+<script src="js/db-part1.js"></script>
+<script src="js/db-part2.js"></script>
+<script src="js/db-part3.js"></script>
+<script src="js/const-pos.js"></script>
+<script>
+const pt=document.getElementById('pt');
+for(let i=1;i<=118;i++){if(!POS[i])continue;const cell=document.createElement('div');cell.className='cell';cell.dataset.n=i;cell.style.gridRow=POS[i][0];cell.style.gridColumn=POS[i][1];cell.innerHTML='<span class="n">'+i+'</span><span class="s">'+(SYM[i]||'?')+'</span>';cell.onclick=function(){sel(i)};pt.appendChild(cell);}
+var currentNum=1;
+function sel(num){
+  currentNum=num;
+  const sym=SYM[num]||'?';
+  const key=sym.toLowerCase();
+  let d=DB[key];
+  if(window.i18n&&typeof i18n.getElementData==='function'){
+    var i18=i18n.getElementData(sym);
+    if(i18){d={name:i18.name||(d&&d.name)||(sym+' (#'+num+')'),w:(d&&d.w)||'—',use:i18.use||(d&&d.use)||'',fact:i18.fact||(d&&d.fact)||'',danger:i18.danger||(d&&d.danger)||''};}
+  }
+  if(!d){d={name:sym+' (#'+num+')',w:'—',use:(window.i18n?i18n.t('noData'):'Маълумот нест.'),fact:'#'+num+' · '+sym,danger:'—'};}
+  document.getElementById('sel').style.display='flex';
+  document.getElementById('selSym').textContent=sym;
+  document.getElementById('selName').textContent=d.name.split('(')[0].trim();
+  document.getElementById('selMeta').textContent='#'+num+' · M = '+d.w;
+  document.getElementById('dSym').textContent=sym;
+  document.getElementById('dName').textContent=d.name.indexOf('(')>=0?d.name:d.name+' ('+sym+')';
+  document.getElementById('dUse').textContent=d.use;
+  document.getElementById('dFact').textContent=d.fact;
+  document.getElementById('dDanger').textContent=d.danger;
+  document.getElementById('dWeight').textContent=d.w;
+  document.getElementById('detail').style.display='block';
+  const img=document.getElementById('elImg');
+  const fb=document.getElementById('imgFb');
+  const src=IMG[sym]||null;
+  if(src){fb.style.display='none';img.style.display='block';img.src=src;img.alt=d.name;}
+  else{img.style.display='none';img.removeAttribute('src');fb.style.display='flex';}
+  document.querySelectorAll('.cell').forEach(function(x){x.classList.remove('active')});
+  var ac=document.querySelector('.cell[data-n="'+num+'"]');
+  if(ac)ac.classList.add('active');
+}
+function doSearch(){
+  var v=document.getElementById('q').value.trim().toLowerCase();
+  if(!v)return;
+  if(!isNaN(v)){var n=+v;if(n>=1&&n<=118){sel(n);document.getElementById('q').value='';return;}}
+  var u=v.toUpperCase();var idx=SYM.indexOf(u);
+  if(idx>0){sel(idx);document.getElementById('q').value='';return;}
+  for(var j=1;j<=118;j++){
+    var d=DB[(SYM[j]||'').toLowerCase()];
+    if(d&&d.name.toLowerCase().indexOf(v)>=0){sel(j);document.getElementById('q').value='';return;}
+    if(SYM[j]&&SYM[j].toLowerCase()===v){sel(j);document.getElementById('q').value='';return;}
+    if(window.i18n&&typeof i18n.getElementData==='function'){
+      var i18=i18n.getElementData(SYM[j]);
+      if(i18&&i18.name&&i18.name.toLowerCase().indexOf(v)>=0){sel(j);document.getElementById('q').value='';return;}
+    }
+  }
+  alert(window.i18n?i18n.t('notFound'):'Элемент ёфт нашуд');
+}
+document.getElementById('q').addEventListener('keypress',function(e){if(e.key==='Enter')doSearch();});
+document.addEventListener('languageChanged',function(){if(currentNum)sel(currentNum);});
+setTimeout(function(){sel(1);},200);
+</script>
+<script src="js/elements-i18n.js"></script>
+<script src="js/i18n.js"></script>
+<script>
+(function(){
+  function wireLangBar(){
+    var bar=document.getElementById('langBar');
+    if(!bar||!window.i18n)return;
+    bar.querySelectorAll('button[data-lang]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        i18n.setLanguage(btn.getAttribute('data-lang'));
+      });
+    });
+    try{
+      var lang=localStorage.getItem('siteLang')||'tg';
+      bar.querySelectorAll('button[data-lang]').forEach(function(b){
+        b.classList.toggle('active',b.getAttribute('data-lang')===lang);
+      });
+    }catch(e){}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',wireLangBar);
+  else wireLangBar();
+  setTimeout(wireLangBar,50);
+})();
+</script>
+<script src="js/site-runtime.js"></script>
+</body>
+</html>
