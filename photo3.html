@@ -99,7 +99,48 @@ function calcConc(){
 }
 function balance(){
   const eq=document.getElementById('eqInput').value.trim().replace(/->/g,'→').replace(/\s+/g,' ');
-  const map={'H2 + O2 → H2O':'2H₂ + O₂ → 2H₂O','Fe + O2 → Fe2O3':'4Fe + 3O₂ → 2Fe₂O₃','N2 + H2 → NH3':'N₂ + 3H₂ → 2NH₃','CH4 + O2 → CO2 + H2O':'CH₄ + 2O₂ → CO₂ + 2H₂O','C + O2 → CO2':'C + O₂ → CO₂','H2 + Cl2 → HCl':'H₂ + Cl₂ → 2HCl'};
+  const map={
+  'H2 + O2 → H2O':'2H₂ + O₂ → 2H₂O',
+  'Fe + O2 → Fe2O3':'4Fe + 3O₂ → 2Fe₂O₃',
+  'N2 + H2 → NH3':'N₂ + 3H₂ → 2NH₃',
+  'CH4 + O2 → CO2 + H2O':'CH₄ + 2O₂ → CO₂ + 2H₂O',
+  'C + O2 → CO2':'C + O₂ → CO₂',
+  'H2 + Cl2 → HCl':'H₂ + Cl₂ → 2HCl',
+  'Al + O2 → Al2O3':'4Al + 3O₂ → 2Al₂O₃',
+  'Mg + O2 → MgO':'2Mg + O₂ → 2MgO',
+  'Na + Cl2 → NaCl':'2Na + Cl₂ → 2NaCl',
+  'K + H2O → KOH + H2':'2K + 2H₂O → 2KOH + H₂',
+  'Na + H2O → NaOH + H2':'2Na + 2H₂O → 2NaOH + H₂',
+  'Ca + H2O → Ca(OH)2 + H2':'Ca + 2H₂O → Ca(OH)₂ + H₂',
+  'Zn + HCl → ZnCl2 + H2':'Zn + 2HCl → ZnCl₂ + H₂',
+  'Fe + HCl → FeCl2 + H2':'Fe + 2HCl → FeCl₂ + H₂',
+  'Al + HCl → AlCl3 + H2':'2Al + 6HCl → 2AlCl₃ + 3H₂',
+  'CaCO3 → CaO + CO2':'CaCO₃ → CaO + CO₂',
+  'H2O2 → H2O + O2':'2H₂O₂ → 2H₂O + O₂',
+  'NH3 + O2 → NO + H2O':'4NH₃ + 5O₂ → 4NO + 6H₂O',
+  'SO2 + O2 → SO3':'2SO₂ + O₂ → 2SO₃',
+  'CO + O2 → CO2':'2CO + O₂ → 2CO₂',
+  'C2H5OH + O2 → CO2 + H2O':'C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O',
+  'H2SO4 + NaOH → Na2SO4 + H2O':'H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O',
+  'HCl + NaOH → NaCl + H2O':'HCl + NaOH → NaCl + H₂O',
+  'CaO + H2O → Ca(OH)2':'CaO + H₂O → Ca(OH)₂',
+  'CO2 + H2O → H2CO3':'CO₂ + H₂O → H₂CO₃',
+  'CuO + H2 → Cu + H2O':'CuO + H₂ → Cu + H₂O',
+  'Fe2O3 + CO → Fe + CO2':'Fe₂O₃ + 3CO → 2Fe + 3CO₂',
+  'Zn + H2SO4 → ZnSO4 + H2':'Zn + H₂SO₄ → ZnSO₄ + H₂',
+  'Mg + H2SO4 → MgSO4 + H2':'Mg + H₂SO₄ → MgSO₄ + H₂',
+  'Ca + O2 → CaO':'2Ca + O₂ → 2CaO',
+  'S + O2 → SO2':'S + O₂ → SO₂',
+  'P + O2 → P2O5':'4P + 5O₂ → 2P₂O₅',
+  'Cu + O2 → CuO':'2Cu + O₂ → 2CuO',
+  'AgNO3 + NaCl → AgCl + NaNO3':'AgNO₃ + NaCl → AgCl + NaNO₃',
+  'BaCl2 + H2SO4 → BaSO4 + HCl':'BaCl₂ + H₂SO₄ → BaSO₄ + 2HCl',
+  'Na2CO3 + HCl → NaCl + CO2 + H2O':'Na₂CO₃ + 2HCl → 2NaCl + CO₂ + H₂O',
+  'CaCO3 + HCl → CaCl2 + CO2 + H2O':'CaCO₃ + 2HCl → CaCl₂ + CO₂ + H₂O',
+  'NH4Cl → NH3 + HCl':'NH₄Cl → NH₃ + HCl',
+  '2KClO3 → 2KCl + 3O2':'2KClO₃ → 2KCl + 3O₂',
+  'CH4 + Cl2 → CH3Cl + HCl':'CH₄ + Cl₂ → CH₃Cl + HCl'
+};
   document.getElementById('balResult').innerHTML=map[eq]?'<b>'+map[eq]+'</b>':'Ин муодила дар система нест. Санҷед: H2 + O2 → H2O';
 }
 function convert(){
